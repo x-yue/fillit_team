@@ -6,33 +6,69 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 00:10:51 by yuxu              #+#    #+#             */
-/*   Updated: 2017/12/10 21:27:31 by yuxu             ###   ########.fr       */
+/*   Updated: 2017/12/13 23:31:00 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
-//the appear line fonction gives how many lines # appeared in each form
 
 int		appear_line(char **board)
 {
 	int i;
 	int line;
-	int count_appear_lines;
 
 	i = 0;
-	line = 1;
-	count_appear_lines = 0;
+	line = 0;
 	while (line < 4)
 	{
 		while (i < 4)
 		{
 			if (board[line][i] == '#')
-				count_appear_lines++;
+				return (line);
 			i++;
 		}
 		line++;
 	}
-	return (count_appear_lines);
+	return (0);
 }
 
 
+int		appear_colomn(char **board)
+{
+	int i;
+	int line;
+
+	i = 0;
+	line = 0;
+	while (line < 4)
+	{
+		while (i < 4)
+		{
+			if (board[line][i] == '#')
+				return(i);
+			i++;
+		}
+		line++;
+	}
+	return (0);
+}
+
+int		appearance(char **board)
+{
+	int		i;
+	int		line;
+	int		four;
+
+	four = 4;
+	i = appear_colomn(board);
+	line = appear_line(board);
+	while (four > 1)
+	{
+		if (i <= 2)
+		{
+			// this is to be done, i m thinking how to just record all the #s :) 
+
+		if (i = 3)
+		{
+			if (board[line + 1][i] != '#')
+				return (0);
+		}
+	}

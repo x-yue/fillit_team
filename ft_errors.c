@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 19:43:44 by yuxu              #+#    #+#             */
-/*   Updated: 2017/12/12 23:48:28 by yuxu             ###   ########.fr       */
+/*   Updated: 2017/12/13 23:31:05 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,26 @@
 // input_check checks if there is any other signs in the form, i put (i < 3) because the board[line][4] is supposed to be '\n'.
 //if it's not '.' or '#' in the form, it will return an error.
 
+#include "libft.h"
+#include <stdio.h>
+
 int		four_x_four(char **board)
 {
 	int i;
 	int line;
 
-	i = 0;
-	line = 1;
-	while (line < 5)
+	line = 0;
+	while (line < 4)
 	{
-		// probably have to put i = 0 here
-		while (board[line][i])
-		{
+		i = 0;
+		while (board[line][i] != '\n')
 			i++;
-		}
+		if (i != 4)
+			return (0);
 		line++;
 	}
-	if (*board[5] != '\n' || i != 4)
+	if (*board[4] != '\n')
 		return (0);
-	// the 5th line is supposed to be '\n' for all forms (include the last one in the test)
 	return (1);
 }
 
@@ -42,16 +43,16 @@ int		input_check(char **board)
 	int line;
 	int nb_hashtag;
 
-	i = 0;
-	line = 1;
+	line = 0;
 	nb_hashtag = 0;
-	while (line < 4) // <= 4 since line initialized to 1?
+	while (line < 4)
 	{
-		while (i < 3)
+		i = 0;
+		while (i <= 3)
 		{
 			if (board[line][i] != '#' && board[line][i] != '.')
 				return (0);
-			if (i == '#')
+			if (board[line][i] == '#')
 				nb_hashtag++;
 			i++;
 		}
@@ -64,33 +65,45 @@ int		input_check(char **board)
 	return (1);
 }
 
-int		ft_errors(char ***board)
+// for two dimention tables:
+int		ft_errors(char **one_board)
 {
-	int table_nb;
-//	int line_all;
-//	int line_form;
-
-	table_nb = 0;
-//	line_all = 0;
-	while (board[table_nb])
-	{
-//	{	while (board[line_form])
-//		{
-//			line_form = 0;
-//			while (line_form < 5)
-//			{
-//				
-//			}
-//			line_all += line_form;
-//		}
-//		table_nb++;
-//	}
-		if (four_x_four(board[table_nb]) == 0 ||
-				input_check(board[table_nb]) == 0)
-			return (0);
-		table_nb++;
-	}
+	if (four_x_four(one_board) == 0 || input_check(one_board) == 0)
+		return (0);
 	return (1);
 }
-// donc i will need to create ***table first in the main
 
+int		main(void)
+{
+	char *str;
+	char **two_d;
+	int i;
+	int n = 0;
+	str = "...#\n .#..\n ....\n ##..\n \n";
+	two_d = ft_strsplit(str, ' ');
+	i= ft_errors(two_d);
+	printf("%d\n", i);
+	while (n < 5)
+	{
+		printf("%s\n", two_d[n]);
+		n++;
+	}
+	printf("%s\n", str);
+	return (0);
+}
+
+//for three dimention boardS:
+//int		ft_errors(char ***board)
+//{
+//	int table_nb;
+//
+///	table_nb = 0;
+//	while (board[table_nb])
+//	{
+//		if (four_x_four(board[table_nb]) == 0 ||
+//				input_check(board[table_nb]) == 0)
+//			return (0);
+//		table_nb++;
+//	}
+//	return (1);
+//}

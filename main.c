@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 20:27:48 by yuxu              #+#    #+#             */
-/*   Updated: 2017/12/12 23:49:35 by yuxu             ###   ########.fr       */
+/*   Updated: 2017/12/13 21:19:19 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,24 @@
 #include <sys/types.h>
 
 
-int		ft_read(char *filename);
 int		ft_errors(char ***board);
 //1. open the file of test
 //2. read the file of test
 //3. check errors
 //4. locate
 //5. backtrack
-//
+
+char	***board_split(char **file)
+{
+	char		***boards;
+	int			board_nb;
+	int			line_all;
+	int			line_board;
+	int			i;
+
+	line_all = 0;
+	while (file[]
+
 
 int		main(int ac, char **av)
 {
@@ -40,10 +50,12 @@ int		main(int ac, char **av)
 		ft_putstr("usage: fillit source_file");
 		return (0);
 	}
-	read_file = // make a three dimention file to give tables with order
+
+	// make a three dimention file to give tables with order
 	//fd = open(av[1], O_RDONLY);
 	//if (fd == -1)
 	//	return (0);
+	read_file = board_split(fd);
 	if (ft_errors(read_file) == 0)
 		ft_putstr(ft_strdup("error\n"));
 }
