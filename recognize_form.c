@@ -62,13 +62,36 @@ int		appearance(char **board)
 	line = appear_line(board);
 	while (four > 1)
 	{
-		if (i <= 2)
-		{
-			// this is to be done, i m thinking how to just record all the #s :) 
+		//if (i <= 2)
+		// this is to be done, i m thinking how to just record all the #s :) 
 
-		if (i = 3)
+		if (i == 3)
 		{
 			if (board[line + 1][i] != '#')
 				return (0);
 		}
 	}
+}
+int		hashtag_loc(char **board)
+{
+	int i;
+	int line;
+
+	line = 0;
+	while (line < 4)
+	{
+		i = 0;
+		while (i <= 3)
+		{
+			if (board[line][i] == '#')
+			{
+				if (board[line + 1][i] != '#' && board[line - 1][i] != '#' && 
+				board[line][i + 1] != '#' && board[line][i - 1] != '#')
+					return (0);
+			}
+			i++;
+		}
+		line++;
+	}
+	return (1);
+}

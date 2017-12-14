@@ -65,10 +65,40 @@ int		input_check(char **board)
 	return (1);
 }
 
-// for two dimention tables:
+int		hashtag_test(char **board)
+{
+	int i;
+	int line;
+	int connect_count;
+
+	line = 0;
+	connect_count = 0;
+	while (line < 4)
+	{
+		i = 0;
+		while (i <= 3)
+		{
+			if (board[line][i] == '#')
+			{
+				if (board[line + 1][i] == '#')
+					connect_count++;
+				if (board[line - 1][i] == '#')
+					connect_count++;
+				if (board[line][i + 1] == '#')
+					connect_count++;
+				if (board[line][i - 1] == '#')
+					connect_count++;
+			}
+			i++;
+		}
+		line++;
+	}
+	return (1);
+}
+
 int		ft_errors(char **one_board)
 {
-	if (four_x_four(one_board) == 0 || input_check(one_board) == 0)
+	if (four_x_four(one_board) == 0 || input_check(one_board) == 0 || hashtag_test(one_board) == 0)
 		return (0);
 	return (1);
 }
