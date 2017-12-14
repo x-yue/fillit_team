@@ -69,7 +69,6 @@ int		hashtag_test(char **board)
 
 	line = 0;
 	connect_count = 0;
-	printf("beginning; %d\n", connect_count);
 	while (line < 4)
 	{
 		i = 0;
@@ -79,22 +78,18 @@ int		hashtag_test(char **board)
 			{
 				if (line <= 3 && board[line + 1][i] == '#')
 					connect_count++;
-	printf("middle:  %d\n", connect_count);
 				if (line >= 1 && board[line - 1][i] == '#')
 					connect_count++;
-	printf("middle:  %d\n", connect_count);
 				if (i <= 2 && board[line][i + 1] == '#')
 					connect_count++;
-	printf("middle:  %d\n", connect_count);
 				if (i >= 1 && board[line][i - 1] == '#')
 					connect_count++;
-	printf("middle:  %d\n", connect_count);
 			}
 			i++;
 		}
 		line++;
 	}
-	printf("ending; %d\n", connect_count);
+	printf("connections\(if pass the other two tests): %d\n", connect_count);
 	if (connect_count != 6 && connect_count != 8)
 		return (0);
 	return (1);
@@ -110,20 +105,43 @@ int		ft_errors(char **one_board)
 
 int		main(void)
 {
-	char *str;
-	char **two_d;
 	int i;
-	int n = 0;
-	str = "....\n .##.\n .##.\n ....\n \n";
-	two_d = ft_strsplit(str, ' ');
-	i= ft_errors(two_d);
-	printf("%d\n", i);
-	while (n < 5)
-	{
-		printf("%s\n", two_d[n]);
-		n++;
-	}
-	printf("%s\n", str);
+	char *str1 = "....\n .##.\n .##.\n ....\n \n"; //ok
+	char *str2 = "...#\n #...\n ...#\n #...\n \n"; //no ok
+	char *str3 = "####\n ....\n ....\n ....\n \n"; //ok
+	char *str4 = "....\n ....\n ....\n ####\n \n"; //ok
+	char *str5 = "....\n ....\n ..#.\n .###\n \n"; //ok
+	char *str6 = "..#.\n ....\n ..##\n ....\n \n"; // ok
+	char *str7 = "..#.\n ..#.\n ..##\n ....\n \n"; // ok
+
+char	**test1 = ft_strsplit(str1, ' '); // change number here
+char	**test2 = ft_strsplit(str2, ' '); // change number here
+char	**test3 = ft_strsplit(str3, ' '); // change number here
+char	**test4 = ft_strsplit(str4, ' '); // change number here
+char	**test5 = ft_strsplit(str5, ' '); // change number here
+char	**test6 = ft_strsplit(str6, ' '); // change number here
+char	**test7 = ft_strsplit(str7, ' '); // change number here
+	i = ft_errors(test1);
+	printf("result1: %d\n", i);
+	i = ft_errors(test2);
+	printf("result2: %d\n", i);
+	i = ft_errors(test3);
+	printf("result3: %d\n", i);
+	i = ft_errors(test4);
+	printf("result4: %d\n", i);
+	i = ft_errors(test5);
+	printf("result5: %d\n", i);
+	i = ft_errors(test6);
+	printf("result6: %d\n", i);
+	i = ft_errors(test7);
+	printf("result7: %d\n", i);
+
+//	int n = 0;
+//	while (n < 5)
+//	{
+//		printf("result test %n: %s\n", n, two_d[n]);
+//		n++;
+//	}
 	return (0);
 }
 
