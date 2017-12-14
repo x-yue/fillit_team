@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// four_x_four fonction checks if the form is in 4x4 forma or not
-// input_check checks if there is any other signs in the form, i put (i < 3) because the board[line][4] is supposed to be '\n'.
-//if it's not '.' or '#' in the form, it will return an error.
-
 #include "libft.h"
 #include <stdio.h>
 
@@ -73,6 +69,7 @@ int		hashtag_test(char **board)
 
 	line = 0;
 	connect_count = 0;
+	printf("beginning; %d\n", connect_count);
 	while (line < 4)
 	{
 		i = 0;
@@ -80,25 +77,33 @@ int		hashtag_test(char **board)
 		{
 			if (board[line][i] == '#')
 			{
-				if (board[line + 1][i] == '#')
+				if (line <= 3 && board[line + 1][i] == '#')
 					connect_count++;
-				if (board[line - 1][i] == '#')
+	printf("middle:  %d\n", connect_count);
+				if (line >= 1 && board[line - 1][i] == '#')
 					connect_count++;
-				if (board[line][i + 1] == '#')
+	printf("middle:  %d\n", connect_count);
+				if (i <= 2 && board[line][i + 1] == '#')
 					connect_count++;
-				if (board[line][i - 1] == '#')
+	printf("middle:  %d\n", connect_count);
+				if (i >= 1 && board[line][i - 1] == '#')
 					connect_count++;
+	printf("middle:  %d\n", connect_count);
 			}
 			i++;
 		}
 		line++;
 	}
+	printf("ending; %d\n", connect_count);
+	if (connect_count != 6 && connect_count != 8)
+		return (0);
 	return (1);
 }
 
 int		ft_errors(char **one_board)
 {
-	if (four_x_four(one_board) == 0 || input_check(one_board) == 0 || hashtag_test(one_board) == 0)
+	if (four_x_four(one_board) == 0 || input_check(one_board) == 0 ||
+		hashtag_test(one_board) == 0)
 		return (0);
 	return (1);
 }
@@ -109,7 +114,7 @@ int		main(void)
 	char **two_d;
 	int i;
 	int n = 0;
-	str = "...#\n .#..\n ....\n ##..\n \n";
+	str = "....\n .##.\n .##.\n ....\n \n";
 	two_d = ft_strsplit(str, ' ');
 	i= ft_errors(two_d);
 	printf("%d\n", i);
