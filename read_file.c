@@ -40,14 +40,19 @@ char	ft_cutstring(char *str)
 	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
 		return (0);
 	board[4] = NULL;
+	while (list.j <= 4)
+	{
+		if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL) //moved to check if it was the pb
+				return (0);
+			list.j++;
+	}
 	while (*str != '\0')
 	{
 		list.j = 0;
 		while (list.j < 4 && str)
 		{
+			//otherwise should be here
 			list.k = 0;
-			if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL)
-				return (0);
 			while (list.k <= 4 && str)
 			{
 				board[list.j][list.k] = *str;
@@ -57,7 +62,6 @@ char	ft_cutstring(char *str)
 			board[list.j][list.k] = '\0';
 			ft_putstr(board[list.j]); /////////here for testing
 			list.j++;
-			
 		}
 	}
 	return (1);
