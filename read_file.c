@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2017/12/12 09:20:11 by ablin            ###   ########.fr       */
+/*   Updated: 2017/12/14 09:32:55 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,84 +15,110 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "libft.h"
+#include "fillit.h"
 
-#define BUF_SIZE 1024
-// may be bad for optimization but looks good
-void	ft_show(char **arr)
-{
-	int i;
-
-	i = 0;
-	while (arr[i] != '\0')
-	{
-		ft_putstr(arr[i]);
-		i++;
-	}
-}
-
-void	ft_cutstring(char *str)
+char	ft_checksize(char *str)
 {
 	int		i;
-	int		start;
 
 	i = 0;
-	start = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\n' && str[i - 1] == '\n')
-		{
-			ft_show(ft_strsplit(ft_strsub(str, (unsigned int)start, (size_t)(i - start)), '\n'));
-			start = i + 1;
-		}
 		i++;
+		if ((i % 21) == 20 && (str[i] != '\n' || str[i] != '\0') &&
+				str[i - 1] != '\n')
+			return (0);
 	}
+	return (1);
 }
 
-char	*ft_newstring(int size, char *filename)
+char	ft_cutstring(char *str)
 {
-	int		fd;
-	int		rd;
-	int		i;
-	char	buf[BUF_SIZE + 1];
+	i_list	list;
+	char	**board;
+
+	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
+		return (0);
+	board[4] = NULL;
+	while (*str != '\0')
+	{
+		list.j = 0;
+		while (list.j < 4 && str)
+		{
+			list.k = 0;
+			if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL)
+				return (0);
+			while (list.k <= 4 && str)
+			{
+				board[list.j][list.k] = *str;
+				str++;
+				list.k++;
+			}
+			board[list.j][list.k] = '\0';
+			ft_putstr(board[list.j]); /////////here for testing
+			list.j++;
+			
+		}
+	}
+	return (1);
+}
+
+char	ft_newstring(int size, char *filename)
+{
+	f_list	list;
 	char	*str;
 
-	i = 0;
-	if ((fd = open(filename, O_RDONLY)) == -1)
+	list.i = 0;
+	if ((list.fd = open(filename, O_RDONLY)) == -1)
 		return (0);
-	if ((str = malloc(sizeof(char) * (size + 1))) == NULL)
+	if ((str = (char*)malloc(sizeof(char) * (size + 1))) == NULL)
 		return (0);
-	while ((rd = read(fd, buf, 1)) != 0)		//read returns -1 if it fails, maybe implement it
+	while ((list.rd = read(list.fd, list.buf, 1)) != 0)
 	{
-		str[i] = *buf;
-		i++;
+		str[list.i] = *list.buf;
+		list.i++;
 	}
-	i = 0;
+	if (list.rd == -1)
+		return (0);
+	str[list.i] = '\0';
+	if (ft_checksize(str) == 0)
+		return (0);
 	ft_cutstring(str);
-	if (close(fd) == -1)
-		return (0);
-	return (str);
-}
-
-int		ft_read(char *filename)
-{
-	int		fd;
-	int		rd;
-	int		i;
-	char	buf[BUF_SIZE + 1];
-
-	i = 0;
-	if ((fd = open(filename, O_RDONLY)) == -1)
-		return (0);
-	rd = read(fd, buf, BUF_SIZE);	//read returns -1 if it fails, maybe implement it
-	if (close(fd) == -1)
-		return (0);
-	if ((ft_newstring(fd, filename)) == 0)
+	if (close(list.fd) == -1)
 		return (0);
 	return (1);
 }
 
+char	ft_read(char *filename)
+{
+	f_list	list;
 
-int main(int ac, char **av)
+	if ((list.fd = open(filename, O_RDONLY)) == -1)
+	{
+		ft_putstr("error");
+		return (0);
+	}
+	while ((list.rd = read(list.fd, list.buf, BUF_SIZE)) != 0)
+		list.i = 0;
+	if (list.rd == -1)
+	{
+		ft_putstr("error");
+		return (0);
+	}
+	if (close(list.fd) == -1)
+	{
+		ft_putstr("error");
+		return (0);
+	}
+	if ((ft_newstring(list.fd, filename)) == 0)
+	{
+		ft_putstr("error");
+		return (0);
+	}
+	return (1);
+}
+
+int		main(int ac, char **av)
 {
 	(void)ac;
 	ft_read(av[1]);
