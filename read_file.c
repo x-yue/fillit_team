@@ -16,6 +16,10 @@
 #include <fcntl.h>
 #include "libft.h"
 #include "fillit.h"
+#include "ft_errors.c"
+#include "../libft/ft_putstr.c"
+#include "../libft/ft_putchar.c"
+#include <stdio.h>
 
 char	ft_checksize(char *str)
 {
@@ -32,37 +36,59 @@ char	ft_checksize(char *str)
 	return (1);
 }
 
+void	ft_show(char **arr)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		j = 0;
+		printf("%d", i);
+		while (arr[i][j] != '\0')
+		{
+			ft_putchar(arr[i][j]);
+			j++;
+		}
+		i++;
+	}
+}
+
 char	ft_cutstring(char *str)
 {
 	i_list	list;
 	char	**board;
 
-	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
+	if ((board = (char **)malloc(sizeof(char *) * (5 + 1))) == NULL)
 		return (0);
-	board[4] = NULL;
 	while (list.j <= 4)
 	{
 		if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL) //moved to check if it was the pb
 				return (0);
 			list.j++;
 	}
+	board[5] = NULL;
 	while (*str != '\0')
 	{
 		list.j = 0;
-		while (list.j < 4 && str)
+		while (list.j < 4 && *str != '\0')
 		{
 			//otherwise should be here
 			list.k = 0;
-			while (list.k <= 4 && str)
+			while (list.k <= 4 && *str != '\0')
 			{
 				board[list.j][list.k] = *str;
 				str++;
 				list.k++;
 			}
 			board[list.j][list.k] = '\0';
-			ft_putstr(board[list.j]); /////////here for testing
 			list.j++;
 		}
+		board[4][0] = '\n';
+		board[4][1] = '\0';
+		str++;
+		ft_errors(board);
 	}
 	return (1);
 }
@@ -82,9 +108,9 @@ char	ft_newstring(int size, char *filename)
 		str[list.i] = *list.buf;
 		list.i++;
 	}
+	str[list.i] = '\0';
 	if (list.rd == -1)
 		return (0);
-	str[list.i] = '\0';
 	if (ft_checksize(str) == 0)
 		return (0);
 	ft_cutstring(str);
@@ -102,8 +128,7 @@ char	ft_read(char *filename)
 		ft_putstr("error");
 		return (0);
 	}
-	while ((list.rd = read(list.fd, list.buf, BUF_SIZE)) != 0)
-		list.i = 0;
+	list.rd = read(list.fd, list.buf, BUF_SIZE);
 	if (list.rd == -1)
 	{
 		ft_putstr("error");
@@ -114,7 +139,7 @@ char	ft_read(char *filename)
 		ft_putstr("error");
 		return (0);
 	}
-	if ((ft_newstring(list.fd, filename)) == 0)
+	if ((ft_newstring(list.rd, filename)) == 0)
 	{
 		ft_putstr("error");
 		return (0);
