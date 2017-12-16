@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include "libft.h"
 #include "fillit.h"
-//#include "ft_errors.c"
+#include "ft_errors.c"
 #include <stdio.h>
 
 char	ft_checksize(char *str)
@@ -43,7 +43,6 @@ void	ft_show(char **arr)
 	while (arr[i] != NULL)
 	{
 		j = 0;
-		printf("%d", i);
 		while (arr[i][j] != '\0')
 		{
 			ft_putchar(arr[i][j]);
@@ -58,23 +57,18 @@ char	ft_cutstring(char *str)
 	i_list	list;
 	char	**board;
 
-	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
+	if ((board = (char **)malloc(sizeof(char *) * (5 + 1))) == NULL) // mettre a 4
 		return (0);
-	while (list.j <= 4)
+	list.j = 0;
+	board[5] = NULL; // a 4 si on prend pas \n
+	while (*str != '\0')
 	{
-		if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL) //moved to check if it was the pb
-				return (0);
-			list.j++;
-	}
-	board[5] = NULL;
-	while (*str  != '\0')
-	{
-		list.j = 0;
-		while (list.j < 4 && *str != '\0')
+		while (list.j < 4)
 		{
-			//otherwise should be here
 			list.k = 0;
-			while (list.k <= 4 && *str != '\0')
+			if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL)
+				return (0);
+			while (list.k <= 4)
 			{
 				board[list.j][list.k] = *str;
 				str++;
@@ -83,10 +77,14 @@ char	ft_cutstring(char *str)
 			board[list.j][list.k] = '\0';
 			list.j++;
 		}
-	//	board[4][0] = '\n';
-	//	board[4][1] = '\0';
-	//	str++;
-	//	ft_show(board);
+		board[list.j] = malloc(sizeof(char) * (1 + 1));
+		board[4][0] = '\n'; // en com si on veut pas \n
+		board[4][1] = '\0';
+		str++;
+		ft_errors(board);
+		free(board);
+		board = NULL;
+		ft_cutstring(str);
 	}
 	return (1);
 }
