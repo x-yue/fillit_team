@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2017/12/16 23:53:06 by ablin            ###   ########.fr       */
+/*   Updated: 2017/12/14 09:32:55 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <fcntl.h>
 #include "libft.h"
 #include "fillit.h"
-#include "ft_errors.c"
+//#include "ft_errors.c"
 #include <stdio.h>
 
 char	ft_checksize(char *str)
@@ -52,40 +52,41 @@ void	ft_show(char **arr)
 	}
 }
 
-void	ft_sendstring(char **board)
-{
-	board[4] = NULL;
-	ft_show(board);
-	free(board);
-	board = NULL;
-}
-
 char	ft_cutstring(char *str)
 {
 	i_list	list;
 	char	**board;
 
-	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
+	if ((board = (char **)malloc(sizeof(char *) * (5 + 1))) == NULL) /// set at 4 + 1 if we dont need the separating \n
 		return (0);
 	list.j = 0;
-	while (list.j < 4 && *str != '\0')
+	board[5] = NULL; // set at 4 we dont need the separating \n
+	while (*str != '\0')
 	{
-		list.k = 0;
-		if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL)
-			return (0);
-		while (list.k <= 4 && *str != '\0')
+		while (list.j < 4)
 		{
-			board[list.j][list.k] = *str;
-			str++;
-			list.k++;
+			list.k = 0;
+			if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL)
+				return (0);
+			while (list.k <= 4)
+			{
+				board[list.j][list.k] = *str;
+				str++;
+				list.k++;
+			}
+			board[list.j][list.k] = '\0';
+			list.j++;
 		}
-		board[list.j][list.k] = '\0';
-		list.j++;
-	}
-	str++;
-	ft_sendstring(board);
-	if (*str != '\0')
+		board[list.j] = malloc(sizeof(char) * (1 + 1));
+		board[4][0] = '\n'; // remove if we dont need the separating \n
+		board[4][1] = '\0';
+		str++;
+		ft_show(board); //change with ft_errors 
+		free(board);
+		board = NULL;
 		ft_cutstring(str);
+		return (1);
+	}
 	return (1);
 }
 
