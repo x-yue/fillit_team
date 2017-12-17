@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2017/12/14 09:26:06 by ablin            ###   ########.fr       */
+/*   Updated: 2017/12/17 02:48:59 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,24 @@ typedef	struct	three_int_list
 	int		j;
 	int		k;
 }				i_list;
+
+typedef	struct	first_tetri_struct
+{
+	int		i;
+	int		j;
+	int		count;
+	int		line;
+	int		column;
+}				tetri_struct;
+
+typedef	struct	united_struct
+{
+	int		i;
+	int		line;
+	int		hashtag_count;
+	int		mv_up;
+	int		mv_left;
+}				nb_list;
 
 char	ft_checksize(char *str);
 char	ft_custring(char *str);
