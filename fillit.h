@@ -44,7 +44,11 @@ typedef	struct	united_struct
 	int		line;
 	int		hashtag_count;
 	int		mv_up;
-	int		mv_left;
+	int		mv_l;
+	char	**tmp;
+	char	**tmp_line;
+	int		n;
+	int		k[4];
 }				nb_list;
 
 char	ft_checksize(char *str);
