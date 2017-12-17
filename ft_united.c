@@ -13,7 +13,6 @@
 #include "libft.h"
 #include "fillit.h"
 #include <stdio.h>
-#include "swap.c"
 
 char	**malloc_it(void)
 {
@@ -30,119 +29,103 @@ char	**malloc_it(void)
 		tmp[line][5] = '\0';
 		line++;
 	}
-	tmp[line] = NULL;
 	return (tmp);
 }
 
-int		small_nb(int *k)
+char	**ft_swap_up(char **board, int line, int i, int mv_up)
 {
-	int		small_nb;
-	int		n;
+	char	**tmp;
 
-	n = 0;
-	small_nb = k[n];
-	while (k[n] && n < 4)
+	tmp = malloc_it();
+	if (line > 0 && mv_up > 0)
 	{
-		if (small_nb > k[n])
-			small_nb = k[n];
-		n++;
+		tmp[line][i] = board[line][i];
+		board[line][i] = board[line - mv_up][i];
+		board[line - mv_up][i] = tmp[line][i];
 	}
-	return (small_nb);
+	return (board);
 }
 
 int		first_left(char **board)
 {
-	nb_list	united;
-	int		k[4];
-	int		n;
+	nb_list	uni;
 
-	united.mv_left = 0;
-	n = 0;
-	united.line = 0;
-	while (united.line < 4)
+	uni.n = 0;
+	uni.line = 0;
+	while (uni.line < 4)
 	{
-		united.i = 0;
-		while (united.i <= 3 && n < 4)
+		uni.i = 0;
+		while (uni.i <= 3 && uni.n < 4)
 		{
-			if (board[united.line][united.i] == '#')
+			if (board[uni.line][uni.i] == '#')
 			{
-				k[n] = united.i;
-				n++;
+				uni.k[uni.n] = uni.i;
+				uni.n++;
 			}
-			united.i++;
+			uni.i++;
 		}
-		united.line++;
+		uni.line++;
 	}
-	united.mv_left = small_nb(k);
-	return (united.mv_left);
+	uni.mv_l = uni.k[0];
+	while (uni.k[uni.n--] && uni.n > 0)
+	{
+		if (uni.mv_l > uni.k[uni.n])
+			uni.mv_l =uni.k[uni.n];
+	}
+	return (uni.mv_l);
 }
 
 char	**ft_left(char **board)
 {
-	nb_list	united;
-	char	**tmp;
-	int		tmp_i;
+	nb_list	uni;
 
-	tmp = malloc_it();
-	tmp_i = 0;
-	united.line = 0;
-	united.mv_left = first_left(board);
-	while (united.line < 4)
+	uni.tmp = malloc_it();
+	uni.line = 0;
+	uni.mv_l = first_left(board);
+	while (uni.line < 4)
 	{
-		united.i = 0;
-		while (united.i <= 3)
+		uni.i = 0;
+		while (uni.i <= 3)
 		{
-			if (board[united.line][united.i] == '#')
+			if (board[uni.line][uni.i] == '#')
 			{
-				if (united.i > 0 && united.mv_left > 0)
+				if (uni.i > 0 && uni.mv_l > 0)
 				{			
-					tmp[united.line][tmp_i] = board[united.line][united.i];
-					board[united.line][united.i] = board[united.line][united.i
-						- united.mv_left];
-					board[united.line][united.i - united.mv_left] =
-						tmp[united.line][tmp_i];
+					uni.tmp[uni.line][uni.i] = board[uni.line][uni.i];
+					board[uni.line][uni.i] = board[uni.line][uni.i- uni.mv_l];
+					board[uni.line][uni.i - uni.mv_l] = uni.tmp[uni.line]
+						[uni.i];
 				}
 			}
-			united.i++;
+			uni.i++;
 		}
-		united.line++;
+		uni.line++;
 	}
 	return (board);
 }
 
 char	**ft_united(char **board)
 {
-	nb_list		united;
-//	int			tmp_line;
-//	char		**tmp;
+	nb_list		uni;
 
-//	tmp = malloc_it();
-//	tmp_line = 0;
-	united.line = 0;
-	united.hashtag_count = 0;
-	while (united.line < 4)
+	uni.tmp = malloc_it();
+	uni.line = 0;
+	uni.hashtag_count = 0;
+	while (uni.line < 4)
 	{
-		united.i = 0;
-		while (united.i <= 3)
+		uni.i = 0;
+		while (uni.i <= 3)
 		{
-			if (board[united.line][united.i] == '#')
+			if (board[uni.line][uni.i] == '#')
 			{
-				united.hashtag_count++;
-				if (united.hashtag_count == 1)
-					united.mv_up = united.line;
-				swap_up(board, united.line, united.i, united.mv_up);
-//				if (united.line > 0 && united.mv_up > 0)
-//				{
-//					tmp[tmp_line][united.i] = board[united.line][united.i];
-//					board[united.line][united.i] = board[united.line -
-//						united.mv_up][united.i];
-//					board[united.line - united.mv_up][united.i] = tmp[tmp_line
-//						][united.i];
-//				}
+				uni.hashtag_count++;
+				if (uni.hashtag_count == 1)
+					uni.mv_up = uni.line;
+				ft_swap_up(board, uni.line, uni.i, uni.mv_up);
 			}
-			united.i++;
+			uni.i++;
 		}
-		united.line++;
+		uni.line++;
 	}
 	board = ft_left(board);
 	return (board);
@@ -151,7 +134,7 @@ char	**ft_united(char **board)
 int		main(void)
 {
 	int n;
-	char *str1 = "....\n ..#.\n .##.\n .#..\n";
+	char *str1 = "....\n ....\n ....\n .#..\n";
 	char **test1 = ft_strsplit(str1, ' ');
 	n = 0;
 	while (n < 4)
@@ -166,6 +149,5 @@ int		main(void)
 		printf("result: %s\n", restult[n]);
 		n++;
 	}
-	
 	return 0;
 }
