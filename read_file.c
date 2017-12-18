@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2017/12/16 23:53:06 by ablin            ###   ########.fr       */
+/*   Updated: 2017/12/18 22:30:30 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "fillit.h"
 #include "ft_errors.c"
 #include <stdio.h>
+#include "T1.c"
 
 char	ft_checksize(char *str)
 {
@@ -40,6 +41,7 @@ void	ft_show(char **arr)
 	int j;
 
 	i = 0;
+	ft_putstr("BOUCLE\n");
 	while (arr[i] != NULL)
 	{
 		j = 0;
@@ -55,12 +57,12 @@ void	ft_show(char **arr)
 void	ft_sendstring(char **board)
 {
 	board[4] = NULL;
-	ft_show(board);
-	free(board);
-	board = NULL;
+	ft_show(board); //change this
+	free(board);// is this necessary?
+	board = NULL;// is this?
 }
 
-char	ft_cutstring(char *str)
+char	ft_cutstring(char *str, int i)
 {
 	i_list	list;
 	char	**board;
@@ -68,24 +70,23 @@ char	ft_cutstring(char *str)
 	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
 		return (0);
 	list.j = 0;
-	while (list.j < 4 && *str != '\0')
+	while (list.j < 4 && str[i] != '\0')
 	{
 		list.k = 0;
 		if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL)
 			return (0);
-		while (list.k <= 4 && *str != '\0')
+		while (list.k <= 4 && str[i] != '\0')
 		{
-			board[list.j][list.k] = *str;
-			str++;
+			board[list.j][list.k] = str[i];
+			i++;
 			list.k++;
 		}
 		board[list.j][list.k] = '\0';
 		list.j++;
 	}
-	str++;
 	ft_sendstring(board);
-	if (*str != '\0')
-		ft_cutstring(str);
+	if (str[i] == '\n')
+		ft_cutstring(str, i);
 	return (1);
 }
 
@@ -99,6 +100,7 @@ char	ft_newstring(int size, char *filename)
 		return (0);
 	if ((str = (char*)malloc(sizeof(char) * (size + 1))) == NULL)
 		return (0);
+	ft_bzero(str, size + 1);
 	while ((list.rd = read(list.fd, list.buf, 1)) != 0)
 	{
 		str[list.i] = *list.buf;
@@ -109,7 +111,9 @@ char	ft_newstring(int size, char *filename)
 		return (0);
 	if (ft_checksize(str) == 0)
 		return (0);
-	ft_cutstring(str);
+//	ft_putstr(str);
+//	printf("%d\n", (int)ft_strlen(str));
+	ft_cutstring(str, 0);
 	if (close(list.fd) == -1)
 		return (0);
 	return (1);

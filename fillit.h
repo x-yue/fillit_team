@@ -6,14 +6,14 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2017/12/17 02:48:59 by ablin            ###   ########.fr       */
+/*   Updated: 2017/12/18 22:04:59 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __FILLIT_H
 # define __FILLIT_H
 
-#define BUF_SIZE 1028 //look for optimization
+#define BUF_SIZE 526 //look for optimization
 typedef	struct	file_list
 {
 	int		fd;
@@ -34,7 +34,7 @@ typedef	struct	first_tetri_struct
 	int		i;
 	int		j;
 	int		count;
-	int		line;
+	int		total;
 	int		column;
 }				tetri_struct;
 
