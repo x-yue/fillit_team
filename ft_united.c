@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:34:42 by yuxu              #+#    #+#             */
-/*   Updated: 2017/12/17 06:40:05 by yuxu             ###   ########.fr       */
+/*   Updated: 2017/12/19 22:37:56 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		first_left(char **board)
 	while (uni.k[uni.n--] && uni.n > 0)
 	{
 		if (uni.mv_l > uni.k[uni.n])
-			uni.mv_l =uni.k[uni.n];
+			uni.mv_l = uni.k[uni.n];
 	}
 	return (uni.mv_l);
 }
@@ -90,11 +90,11 @@ char	**ft_left(char **board)
 			if (board[uni.line][uni.i] == '#')
 			{
 				if (uni.i > 0 && uni.mv_l > 0)
-				{			
+				{
 					uni.tmp[uni.line][uni.i] = board[uni.line][uni.i];
-					board[uni.line][uni.i] = board[uni.line][uni.i- uni.mv_l];
-					board[uni.line][uni.i - uni.mv_l] = uni.tmp[uni.line]
-						[uni.i];
+					board[uni.line][uni.i] = board[uni.line][uni.i - uni.mv_l];
+					board[uni.line][uni.i - uni.mv_l] = uni.tmp[uni.line][
+						uni.i];
 				}
 			}
 			uni.i++;
@@ -130,7 +130,7 @@ char	**ft_united(char **board)
 	board = ft_left(board);
 	return (board);
 }
-
+/*
 int		main(void)
 {
 	int n;
@@ -150,4 +150,4 @@ int		main(void)
 		n++;
 	}
 	return 0;
-}
+}*/
