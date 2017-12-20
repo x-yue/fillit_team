@@ -12,8 +12,13 @@
 
 #ifndef __FILLIT_H
 # define __FILLIT_H
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include "libft.h"
 
-#define BUF_SIZE 526 //look for optimization
+#define BUF_SIZE 546 //look for optimization
 typedef	struct	file_list
 {
 	int		fd;
@@ -38,6 +43,14 @@ typedef	struct	first_tetri_struct
 	int		column;
 }				tetri_struct;
 
+typedef	struct	position_struct
+{
+	int		o_line;
+	int		o_col;
+	int		line;
+	int		col;
+}				pos_struct;
+
 typedef	struct	united_struct
 {
 	int		i;
@@ -51,9 +64,9 @@ typedef	struct	united_struct
 	int		k[4];
 }				nb_list;
 
-char	ft_checksize(char *str);
-char	ft_custring(char *str);
-char	ft_newstring(int size, char *filename);
-char	ft_read(char *filename);
+int		ft_checksize(char *str);
+int		ft_custring(char *str);
+int		ft_newstring(int size, char *filename);
+int		ft_read(char *filename);
 
 #endif

@@ -2,97 +2,57 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	ft_show1(char **arr)
+pos_struct	ft_position(char **board)
 {
-	int i;
-	int j;
-	i = 0;
-	while (arr[i] != NULL)
+	pos_struct	pos;
+
+	pos.line = 0;
+	while (board[pos.line] != NULL)
 	{
-		j = 0;
-		while (arr[i][j] != '\0')
-		{
-			ft_putchar(arr[i][j]);
-			j++;
-		}
-		i++;
+		pos.col = 0;
+		while (board[pos.line][pos.col] != '\0' && board[pos.line][pos.col] != '#')
+			pos.col++;
+		pos.line++;
 	}
+	pos.line--; //check si la fonction a atteint la fin du board
+	return (pos);
 }
 
-char	**ft_set_map(char **map, char **board, int line)
+int			pos_check(char **map, int line, int col)
 {
-	int		i;
-	int		j;
+	pos_struct	pos;
 
-	i = 0;
-	while (i < line)
+	pos.o_line = 0;
+	pos.o_col = 0;
+	ft_position(board, pos);
+}
+
+char	**ft_place(char **map)
+{
+	pos_struct	pos;//maybe one named map
+	int		line;
+	int		col;
+	int		available;
+
+	line = 0;
+	col = 0;
+	available = 0;
+	while (map[line] != NULL && map[line][col] != '.')
 	{
-		j = 0;
-		while (j < line)
+		col = 0;
+		while (map[line][col] != '\0' && map[line][col] == '#')
 		{
-			map[i][j] = board[i][j];
-			j++;
+			col++;
 		}
-		map[i][j] = '\n';
-		map[i][j + 1] = '\0';
-		i++;
+		if (map[line][col] == '.')
+		{
+			if (map[line - 1][col] == '.' || map[line + 1][col] == '.'
+			|| map[line][col - 1] == '.' || map[line][col + 1] == '.')
+				available = 1;
+		}
+	if (available == 1)
+		line++;
 	}
-	map[i] = NULL;
-	ft_show1(map);
+	ft_();
 	return (map);
 }
-
-char	**ft_first_map(int line, int col, char **board)
-{
-	char	**map;
-	int		i;
-
-	i = 0;
-	if (line < col)
-		line = col;
-	if ((map = (char **)malloc(sizeof(char *) * (line + 1))) == NULL)
-		return (0);
-	while (i < line)
-	{
-		if ((map[i] = (char *)malloc(sizeof(char) * (line + 1))) == NULL)
-			return (0);
-		i++;
-	}
-	map = ft_set_map(map, board, line);
-	return (map);
-}
-
-int		ft_first_tetri(char **board)
-{
-	tetri_struct	tetri;
-
-	tetri.i = 0;
-	tetri.column = 0;
-	tetri.total = 0;
-	while (board[tetri.i] != NULL && tetri.total != 4)
-	{
-		tetri.count = 0;
-		tetri.j = 0;
-		while (board[tetri.i][tetri.j] != '\0')
-		{
-			if (board[tetri.i][tetri.j] == '#')
-			{
-				board[tetri.i][tetri.j] = 'A';
-				tetri.count = tetri.j + 1;
-				tetri.total++;
-			}
-			tetri.j++;
-		}
-		if (tetri.column < tetri.count)
-			tetri.column = tetri.count;
-		tetri.i++;
-	}
-	ft_first_map(tetri.i, tetri.column, board);
-	return (1);
-}
-/*
-int	main()
-{
-	ft_first_tetri(ft_strsplit(".#..\n ###.\n ....\n ....\n ", ' '));
-	return (0);
-}*/
