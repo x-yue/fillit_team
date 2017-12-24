@@ -18,8 +18,18 @@
 #include <unistd.h>
 #include "libft.h"
 
-#define BUF_SIZE 546 //look for optimization
-typedef	struct	file_list
+#define BUF_SIZE 546 //can remove
+
+typedef	struct	arr_list
+{
+	struct arr_list		*start;
+	char				*str;
+	char				**board;
+	struct arr_list		*next;
+	int					test;
+}				a_list;
+
+typedef	struct	file_list //can remove
 {
 	int		fd;
 	int		rd;
@@ -64,9 +74,9 @@ typedef	struct	united_struct
 	int		k[4];
 }				nb_list;
 
-int		ft_checksize(char *str);
+int		ft_checksize(char *str); //can remove
 int		ft_custring(char *str);
-int		ft_newstring(int size, char *filename);
+int		ft_newstring(int size, char *filename); //became ft_check
 int		ft_read(char *filename);
 
 #endif
