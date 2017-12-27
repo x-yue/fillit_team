@@ -103,7 +103,85 @@ int		ft_first_tetri(char **board)
 	return (1);
 }
 
-char	**ft_map(char **map, int size)
+char	**ft_set()
+{
+	char	**map;
+	int		line;
+	int		col;
+
+	if ((map = (char **)malloc(sizeof(char *) * (2 + 1))) == NULL)
+		return (0);
+	line = 0;
+	while (line < 2)
+	{
+		col = 0;
+		map[line] = ft_strnew(3);
+		while (col < 2)
+		{
+			map[line][col] = '.';
+			col++;
+		}
+		map[line][col] = '\n';
+		map[line][col + 1] = '\0';
+		line++;
+	}
+	map[line] = NULL;
+	return (map);
+}
+
+s_pos	ft_getpos(char **board, int call)
+{
+	s_pos	pos;
+	int		line;
+	int		col;
+	int		count;
+
+	line = 0;
+	count = 0;
+	while (board[line] != NULL)
+	{
+		col = 0;
+		while (board[line][col] != '\0')
+		{
+			if (board[line][col] == '#')//can probably omit the first #
+				count++;
+			if (count == call)
+			{
+				pos.x = line;
+				pos.y = col;
+				return (pos);
+			}
+			col++;
+		}
+		line++;
+	}
+	return (pos); //check if old pos and pos returned are the same, if it's the case, abort
+}
+
+void	ft_fit(char **map, char **board)
+{
+	//free each line of the board then the board itself after copying the tetriminos
+	//same for the map when expanding itself
+	int		line;
+	int		col;
+
+	line = 0;
+	while (map[line] != NULL)
+	{
+		col = 0;
+		while (map[line][col] != '\0')
+		{
+			if (map[line][col] == '.')
+			{
+				//call ft_pos
+				//check si map[line + pos.x][col + pos.y] == '.'
+			}
+			col++;
+		}
+	}
+}
+
+char	**ft_map(char **map, int size)//should free the old map
 {
 	char	**newmap;
 	int		line;
@@ -136,6 +214,5 @@ char	**ft_map(char **map, int size)
 /*
 int	main()
 {
-	ft_first_tetri(ft_strsplit(".#..\n ###.\n ....\n ....\n ", ' '));
 	return (0);
 }*/

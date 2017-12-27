@@ -18,7 +18,14 @@
 #include <unistd.h>
 #include "libft.h"
 
+//have to clean the extras struct and make new one 
+
 #define BUF_SIZE 546 //can remove
+typedef	struct	struct_pos
+{
+	int		x;
+	int		y;
+}				s_pos;
 
 typedef	struct	arr_list
 {

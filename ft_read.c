@@ -40,6 +40,7 @@ int	ft_cutstring(char *str, int tetrinb)
 	int		i;
 	char	**board;
 
+	(void)tetrinb;
 	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
 		return (0);
 	line = 0;
@@ -60,9 +61,10 @@ int	ft_cutstring(char *str, int tetrinb)
 		line++;
 	}
 	board[4] = NULL;
-	ft_tetri(board, tetrinb);
-	//ft_show(board); //check return value and return 0 if wrong
-	return (1);
+	ft_show(board); //check return value and return 0 if wrong
+	ft_putchar('\n'); //remove
+	ft_map(board, 4);
+	return (0);
 }
 
 int	ft_check(char *str)
