@@ -138,6 +138,9 @@ s_pos	ft_getpos(char **board, int call)
 
 	line = 0;
 	count = 0;
+	
+	pos.x = 0;//////
+	pos.y = 0;//////
 	while (board[line] != NULL)
 	{
 		col = 0;
@@ -158,27 +161,43 @@ s_pos	ft_getpos(char **board, int call)
 	return (pos); //check if old pos and pos returned are the same, if it's the case, abort
 }
 
-void	ft_fit(char **map, char **board)
+int		ft_fit(char **map, char **board, int size)
 {
 	//free each line of the board then the board itself after copying the tetriminos
 	//same for the map when expanding itself
 	int		line;
 	int		col;
-
+	int		call;
+	s_pos	pos;
+	
 	line = 0;
 	while (map[line] != NULL)
 	{
 		col = 0;
 		while (map[line][col] != '\0')
 		{
+			call = 2; //on check direct pour la pos du 2e hashtagd
 			if (map[line][col] == '.')
 			{
-				//call ft_pos
-				//check si map[line + pos.x][col + pos.y] == '.'
+				pos = ft_getpos(board, call);
+				call++;
+				while ((line + pos.x) < size && (col + pos.y) < size &&  map[line + pos.x][col + pos.y] == '.' && call != 4)
+				{
+					pos = ft_getpos(board, call);
+					call++;
+				}
+				if ((line + pos.x) < size && (col + pos.y) < size && map[line + pos.x][col + pos.y] == '.' && call == 4)
+				{
+				ft_putstr("fits");
+				//	ft_insert(map, board);
+					return (1);
+				}
 			}
 			col++;
 		}
+		line++;
 	}
+	return (0);
 }
 
 char	**ft_map(char **map, int size)//should free the old map
@@ -209,7 +228,29 @@ char	**ft_map(char **map, int size)//should free the old map
 	newmap[line][col + 1] = '\0';
 	newmap[line + 1] = NULL;
 	ft_show1(newmap);
+	ft_putchar('\n');
 	return (newmap);
+}
+
+void	ft_test(char **board)
+{
+	char **map;
+	map = ft_strsplit("#...\n .#..\n ..#.\n ...#\n ", ' ');
+	ft_show1(map);
+	if (ft_fit(map, board, 4) == 0)
+		ft_putstr("cant fit\n");
+	return;
+	/*
+	map = ft_set();
+	if (ft_fit(map, board, 2) == 0)
+	{
+		map = ft_map(map, 2);
+		if (ft_fit(map, board, 3) == 0)
+		{
+			map = ft_map(map, 3);
+			ft_fit(map, board, 4);
+		}
+	}*/
 }
 /*
 int	main()
