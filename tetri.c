@@ -136,6 +136,7 @@ s_pos	ft_getpos(char **board, int call)
 	int		col;
 	int		count;
 
+	printf("(%d)\n", call);
 	line = 0;
 	count = 0;
 	
@@ -152,6 +153,7 @@ s_pos	ft_getpos(char **board, int call)
 			{
 				pos.x = line;
 				pos.y = col;
+				printf("[%d : %d]\n", pos.x, pos.y);
 				return (pos);
 			}
 			col++;
@@ -159,6 +161,22 @@ s_pos	ft_getpos(char **board, int call)
 		line++;
 	}
 	return (pos); //check if old pos and pos returned are the same, if it's the case, abort
+}
+
+void	ft_insert(char **map, char **board, int line, int col)
+{
+	int		call;
+	s_pos	pos;
+
+	call = 2;
+	map[line][col] = '#';
+	while (call <= 4)
+	{
+		pos = ft_getpos(board, call);
+		map[line + pos.x][col + pos.y] = '#';
+		call ++;
+	}
+	ft_show1(map);
 }
 
 int		ft_fit(char **map, char **board, int size)
@@ -181,6 +199,7 @@ int		ft_fit(char **map, char **board, int size)
 			{
 				pos = ft_getpos(board, call);
 				call++;
+			/////////	printf("(%d : %d)\n", line + pos.x, col + pos.y);
 				while ((line + pos.x) < size && (col + pos.y) < size &&  map[line + pos.x][col + pos.y] == '.' && call != 4)
 				{
 					pos = ft_getpos(board, call);
@@ -188,8 +207,8 @@ int		ft_fit(char **map, char **board, int size)
 				}
 				if ((line + pos.x) < size && (col + pos.y) < size && map[line + pos.x][col + pos.y] == '.' && call == 4)
 				{
-				ft_putstr("fits");
-				//	ft_insert(map, board);
+				ft_putstr("fits\n");
+				ft_insert(map, board, line, col);
 					return (1);
 				}
 			}
@@ -232,14 +251,28 @@ char	**ft_map(char **map, int size)//should free the old map
 	return (newmap);
 }
 
+void	ft_test2(char **board)
+{
+	ft_getpos(board, 1);///////////
+	//si size = 2 infact col [2] = '\n'
+	ft_getpos(board, 2);
+	ft_getpos(board, 3);
+	ft_getpos(board, 4);
+}
+
 void	ft_test(char **board)
 {
+	(void)board;
 	char **map;
-	map = ft_strsplit("#...\n .#..\n ..#.\n ...#\n ", ' ');
+
+	map = ft_strsplit("....\n ....\n ....\n ....\n ", ' ');
 	ft_show1(map);
 	if (ft_fit(map, board, 4) == 0)
 		ft_putstr("cant fit\n");
 	return;
+
+
+
 	/*
 	map = ft_set();
 	if (ft_fit(map, board, 2) == 0)
