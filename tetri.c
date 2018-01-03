@@ -136,7 +136,7 @@ s_pos	ft_getpos(char **board, int call)
 	int		col;
 	int		count;
 
-	printf("(%d)\n", call);
+	//printf("(%d)\n", call);
 	line = 0;
 	count = 0;
 	
@@ -153,7 +153,7 @@ s_pos	ft_getpos(char **board, int call)
 			{
 				pos.x = line;
 				pos.y = col;
-				printf("[%d : %d]\n", pos.x, pos.y);
+				//////printf("[%d : %d]\n", pos.x, pos.y);
 				return (pos);
 			}
 			col++;
@@ -176,6 +176,7 @@ void	ft_insert(char **map, char **board, int line, int col)
 		map[line + pos.x][col + pos.y] = '#';
 		call ++;
 	}
+	ft_putstr("\nmap after insertion\n");
 	ft_show1(map);
 }
 
@@ -207,7 +208,6 @@ int		ft_fit(char **map, char **board, int size)
 				}
 				if ((line + pos.x) < size && (col + pos.y) < size && map[line + pos.x][col + pos.y] == '.' && call == 4)
 				{
-				ft_putstr("fits\n");
 				ft_insert(map, board, line, col);
 					return (1);
 				}
@@ -266,6 +266,7 @@ void	ft_test(char **board)
 	char **map;
 
 	map = ft_strsplit("....\n ....\n ....\n ....\n ", ' ');
+	ft_putstr("original map\n");
 	ft_show1(map);
 	if (ft_fit(map, board, 4) == 0)
 		ft_putstr("cant fit\n");
