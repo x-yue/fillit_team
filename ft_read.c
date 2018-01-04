@@ -12,6 +12,7 @@
 
 #include "fillit.h"
 #include "tetri.c"
+#include "ft_united.c"
 #include <stdio.h>
 
 void	ft_show(char **arr)
@@ -40,7 +41,7 @@ int	ft_cutstring(char *str, int tetrinb)
 	int		i;
 	char	**board;
 
-	(void)tetrinb;
+	(void)tetrinb;/////////////
 	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
 		return (0);
 	line = 0;
@@ -63,8 +64,9 @@ int	ft_cutstring(char *str, int tetrinb)
 	board[4] = NULL;
 	ft_show(board); //check return value and return 0 if wrong
 	ft_putchar('\n'); //remove
-	ft_map(board, 4);
-	return (0);
+	ft_test(board);
+	//ft_test(ft_united(board));
+	return (0); //////return 1, 0 is for testing for only one board
 }
 
 int	ft_check(char *str)

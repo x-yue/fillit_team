@@ -59,8 +59,7 @@ int	ft_cutstring(char *str, int i)
 	while (list.j < 4 && str[i] != '\0')
 	{
 		list.k = 0;
-		if ((board[list.j] = (char*)malloc(sizeof(char) * (5 + 1))) == NULL)
-			return (0);
+		board[list.j] = ft_strnew(5);
 		while (list.k <= 4 && str[i] != '\0')
 		{
 			board[list.j][list.k] = str[i];
@@ -72,8 +71,7 @@ int	ft_cutstring(char *str, int i)
 	}
 	i++;
 	board[4] = NULL;
-	if (ft_first_tetri(board) == 0)//change this
-		return (0);
+	ft_show(board); //check return value and return 0 if wrong
 	if (str[i] != '\0')
 		ft_cutstring(str, i);
 	return (1);

@@ -200,7 +200,7 @@ void	ft_test(char **board)
 	(void)board;
 	char **map;
 
-	map = ft_strsplit("#...\n #...\n #...\n #...\n ", ' ');
+	map = ft_strsplit("####\n ####\n #..#\n ##..\n ", ' ');
 	ft_putstr("original map\n");
 	ft_show1(map);
 	if (ft_fit(map, board, 4) == 0)
