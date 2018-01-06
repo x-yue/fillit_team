@@ -11,25 +11,12 @@
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "libft.h"
 #include <stdio.h>
 
-void	ft_show1(char **arr)
-{
-	int i;
-	int j;
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		j = 0;
-		while (arr[i][j] != '\0')
-		{
-			ft_putchar(arr[i][j]);
-			j++;
-		}
-		i++;
-	}
-}
+/* 
+ * ft_map expands an existing map by 1 ( +1 col and line)
+ * called in ft_fit if the tetriminos couldnt fit
+*/
 
 char	**ft_map(char **map, int size)//should free the old map
 {
@@ -58,10 +45,15 @@ char	**ft_map(char **map, int size)//should free the old map
 	newmap[line][col] = '\n';
 	newmap[line][col + 1] = '\0';
 	newmap[line + 1] = NULL;
-	ft_show1(newmap);
+	ft_showtab(newmap);
 	ft_putchar('\n');
 	return (newmap);
 }
+
+/*
+ * sets the first map as small as a tetriminos can be (2*2)
+ * called once in ft_fit if it's the first time we call the ft
+*/
 
 char	**ft_set()
 {
@@ -89,6 +81,11 @@ char	**ft_set()
 	return (map);
 }
 
+/*
+ * ft_getpos returns the pos of the hashtag requested (call)
+ * called in ft_insert and ft_fit
+*/
+
 s_pos	ft_getpos(char **board, int call)
 {
 	s_pos	pos;
@@ -96,7 +93,6 @@ s_pos	ft_getpos(char **board, int call)
 	int		col;
 	int		count;
 
-	//printf("(%d)\n", call);
 	line = 0;
 	count = 0;
 	
@@ -107,21 +103,25 @@ s_pos	ft_getpos(char **board, int call)
 		col = 0;
 		while (board[line][col] != '\0')
 		{
-			if (board[line][col] == '#')//can probably omit the first #
+			if (board[line][col] == '#')
 				count++;
 			if (count == call)
 			{
 				pos.x = line;
 				pos.y = col;
-				//////printf("[%d : %d]\n", pos.x, pos.y);
 				return (pos);
 			}
 			col++;
 		}
 		line++;
 	}
-	return (pos); //check if old pos and pos returned are the same, if it's the case, abort
+	return (pos);
 }
+
+/*
+ * insert the tetriminos (board)  in the map
+ * called in ft_fit
+*/
 
 void	ft_insert(char **map, char **board, int line, int col)
 {
@@ -133,96 +133,59 @@ void	ft_insert(char **map, char **board, int line, int col)
 	while (call <= 4)
 	{
 		pos = ft_getpos(board, call);
-		map[line + pos.x][col + pos.y] = '#';
+		map[line + pos.x][col + pos.y] = '#'; //have to change the # by the corresponding letter
 		call ++;
 	}
-	ft_putstr("\nmap after insertion\n");
-	ft_show1(map);
+	ft_putstr("map after insertion\n");
+	ft_showtab(map);
 }
 
-int		ft_fit(char **map, char **board, int size)
+/*
+ * this function check if a tetriminos can fit
+ * calls to ft_set if it is the first time we call this ft
+ * calls to ft_map to expand the map if it cannot fit
+ * calls to ft_insert if it fits
+*/
+
+int		ft_fit(char **board, int subcall)//need to make it shorter etc
 {
-	//free each line of the board then the board itself after copying the tetriminos
-	//same for the map when expanding itself
-	int		line;
-	int		col;
-	int		call;
+	int				line;
+	int				col;
+	int				call;
+	static int		size;
+	static char		**map;
 	s_pos	pos;
 	
+	if (subcall == 0)
+	{
+		map = ft_set();
+		size = 2;
+	}
 	line = 0;
 	while (map[line] != NULL)
 	{
 		col = 0;
 		while (map[line][col] != '\0')
 		{
-			call = 2; //on check direct pour la pos du 2e hashtagd
+			call = 2;
 			if (map[line][col] == '.')
 			{
-				pos = ft_getpos(board, call);
-				call++;
-				//printf("[%d : %d]", line, col);
-				//printf("(%d : %d)\n", line + pos.x, col + pos.y);
-				while ((line + pos.x) < size && (col + pos.y) < size &&  map[line + pos.x][col + pos.y] == '.' && call != 4)
+				pos = ft_getpos(board, call++);
+				while ((line + pos.x) < size && (col + pos.y) < size &&  map[line + pos.x][col + pos.y] == '.')
 				{
-					pos = ft_getpos(board, call);
-					call++;
-				}
-					pos = ft_getpos(board, call);
-				if ((line + pos.x) < size && (col + pos.y) < size && map[line + pos.x][col + pos.y] == '.' && call == 4)
-				{
-				ft_insert(map, board, line, col);
-					return (1);
+					if (call == 5)
+					{
+						ft_insert(map, board, line, col);
+						return (1);
+					}
+					pos = ft_getpos(board, call++);
 				}
 			}
 			col++;
 		}
 		line++;
 	}
-	map = ft_map(map, size);
-	ft_show1(map);
-	size++;
-	ft_fit(map, board, size);
+	map = ft_map(map, size++);
+	ft_fit(board, ++subcall);
 	return (0);
 }
-
-
-void	ft_test2(char **board)
-{
-	ft_getpos(board, 1);///////////
-	//si size = 2 infact col [2] = '\n'
-	ft_getpos(board, 2);
-	ft_getpos(board, 3);
-	ft_getpos(board, 4);
-}
-
-void	ft_test(char **board)
-{
-	(void)board;
-	char **map;
-
-	map = ft_strsplit("####\n ####\n #..#\n ##..\n ", ' ');
-	ft_putstr("original map\n");
-	ft_show1(map);
-	if (ft_fit(map, board, 4) == 0)
-		ft_putstr("cant fit\n");
-	return;
-
-
-
-	/*
-	map = ft_set();
-	if (ft_fit(map, board, 2) == 0)
-	{
-		map = ft_map(map, 2);
-		if (ft_fit(map, board, 3) == 0)
-		{
-			map = ft_map(map, 3);
-			ft_fit(map, board, 4);
-		}
-	}*/
-}
-/*
-int	main()
-{
-	return (0);
-}*/

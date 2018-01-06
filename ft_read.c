@@ -15,25 +15,7 @@
 #include "ft_united.c"
 #include <stdio.h>
 
-void	ft_show(char **arr)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		j = 0;
-		while (arr[i][j] != '\0')
-		{
-			ft_putchar(arr[i][j]);
-			j++;
-		}
-		i++;
-	}
-}
-
-int	ft_cutstring(char *str, int tetrinb)
+int	ft_board(char *str, int tetrinb)
 {
 	int		line;
 	int		col;
@@ -41,7 +23,6 @@ int	ft_cutstring(char *str, int tetrinb)
 	int		i;
 	char	**board;
 
-	(void)tetrinb;/////////////
 	if ((board = (char **)malloc(sizeof(char *) * (4 + 1))) == NULL)
 		return (0);
 	line = 0;
@@ -62,11 +43,10 @@ int	ft_cutstring(char *str, int tetrinb)
 		line++;
 	}
 	board[4] = NULL;
-	ft_show(board); //check return value and return 0 if wrong
-	ft_putchar('\n'); //remove
-	ft_test(board);
-	//ft_test(ft_united(board));
-	return (0); //////return 1, 0 is for testing for only one board
+	ft_showtab(board);
+	ft_putchar('\n');
+	ft_fit(ft_united(board), tetrinb);
+	return (1); //////return 1, 0 is for testing for only one board
 }
 
 int	ft_check(char *str)
@@ -95,7 +75,6 @@ int	ft_check(char *str)
 	}
 		i++;
 	}
-	printf("[%d]\n", count);
 	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n')
 		return (0);
 	return (1);
@@ -113,7 +92,12 @@ int	ft_read(char *filename)
 		return (0);
 	while ((rd = read(fd, buf, 21)) >= 20)
 	{
-		if (ft_check(buf) == 0 || ft_cutstring(buf, tetrinb) == 0)
+		if (ft_check(buf) == 0)
+		{
+			ft_putstr("error\n");
+			return (0);
+		}
+		if (ft_board(buf, tetrinb) == 0)
 			return (0);
 		tetrinb++;
 	}
@@ -122,11 +106,4 @@ int	ft_read(char *filename)
 	if (close(fd) == -1)
 		return (0);
 	return (1);
-}
-
-int		main(int ac, char **av)
-{
-	(void)ac;
-	ft_read(av[1]);
-	return (0);
 }

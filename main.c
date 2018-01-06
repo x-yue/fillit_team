@@ -14,28 +14,16 @@
 #include "libft.h"
 #include <sys/uio.h>
 #include <sys/types.h>
-
-int		ft_errors(char ***board);
-//1. open the file of test
-//2. read the file of test
-//3. check errors
-//4. locate
-//5. backtrack
+#include "ft_read.c"
 
 int		main(int ac, char **av)
 {
-	char ***read_file;
-
 	if (ac != 2)
 	{
 		ft_putstr("usage: fillit source_file");
 		return (0);
 	}
 	if (ft_read(av[1]) ==  0)
-	{
-		ft_putstr("file pb\n");
 		return (0);
-	}
-	if (ft_errors(read_file) == 0)
-		ft_putstr(ft_strdup("error\n"));
+		//ft_putstr(ft_strdup("error\n"));
 }
