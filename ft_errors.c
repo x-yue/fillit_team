@@ -6,13 +6,14 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 19:43:44 by yuxu              #+#    #+#             */
-/*   Updated: 2017/12/17 00:05:31 by yuxu             ###   ########.fr       */
+/*   Updated: 2017/12/17 04:00:04 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 
+/*
 int		four_x_four(char **board)
 {
 	int i;
@@ -30,6 +31,7 @@ int		four_x_four(char **board)
 	}
 	return (1);
 }
+*/
 
 int		input_check(char **board)
 {
@@ -101,8 +103,7 @@ int		hashtag_test(char **board)
 
 int		ft_errors(char **one_board)
 {
-	if (four_x_four(one_board) == 0 || input_check(one_board) == 0 ||
-		hashtag_test(one_board) == 0)
+	if (input_check(one_board) == 0 || hashtag_test(one_board) == 0) // check return value if we use four x four
 		return (0);
 	return (1);
 }
