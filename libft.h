@@ -93,4 +93,5 @@ int					ft_islower(int c);
 int					ft_isupper(int c);
 int					ft_isspace(int c);
 int					ft_isblank(int c);
+void				ft_showtab(char **arr);
 #endif
