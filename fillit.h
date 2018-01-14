@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2017/12/18 22:04:59 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/14 01:37:00 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,26 @@
 #include <unistd.h>
 #include "libft.h"
 
-//have to clean the extras struct and make new one 
-
-#define BUF_SIZE 546 //can remove
-typedef	struct	struct_pos
+typedef	struct	s_tetri
 {
-	int		x;
-	int		y;
-}				s_pos;
+	char	**board;
+	char		letter;
+	struct	s_tetri	*next;
+	struct	s_tetri	*start;
+}				t_tetri;
 
-typedef	struct	arr_list
+typedef	struct	struct_poss
 {
-	struct arr_list		*start;
-	char				*str;
-	char				**board;
-	struct arr_list		*next;
-	int					test;
-}				a_list;
+	int		x[4];
+	int		y[4];
+}			s_poss;
 
 typedef	struct	file_list //can remove
 {
 	int		fd;
 	int		rd;
 	int		i;
-	char	buf[BUF_SIZE + 1];
+	char	buf[21];
 }				f_list;
 
 typedef	struct	three_int_list
@@ -50,23 +46,6 @@ typedef	struct	three_int_list
 	int		j;
 	int		k;
 }				i_list;
-
-typedef	struct	first_tetri_struct
-{
-	int		i;
-	int		j;
-	int		count;
-	int		total;
-	int		column;
-}				tetri_struct;
-
-typedef	struct	position_struct
-{
-	int		o_line;
-	int		o_col;
-	int		line;
-	int		col;
-}				pos_struct;
 
 typedef	struct	united_struct
 {
@@ -81,9 +60,20 @@ typedef	struct	united_struct
 	int		k[4];
 }				nb_list;
 
-int		ft_checksize(char *str); //can remove
-int		ft_custring(char *str);
-int		ft_newstring(int size, char *filename); //became ft_check
+//ft_read ft
+char	**ft_board(char *str);
+int		ft_check(char *str);
 int		ft_read(char *filename);
-
+//ft_united ft
+char	**malloc_it(void);
+char	**ft_swap_up(char **board, int line, int i, int mv_up);
+int		first_left(char **board);
+char	**ft_left(char **board);
+char	**ft_united(char **board);
+//tetri.c ft
+char	**ft_map(char **map, int size);
+char	**ft_set();
+s_pos	ft_getpos(char **board, int call);
+char	**ft_insert(char **map, t_tetri *tetri, int line, int col);
+char	**ft_fit(t_tetri *tetri, int size);
 #endif

@@ -6,16 +6,16 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2017/12/18 22:30:30 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/14 01:36:26 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "tetri.c"
+#include "ft_tetri.c"
 #include "ft_united.c"
 #include <stdio.h>
 
-int	ft_board(char *str, int tetrinb)
+char	**ft_board(char *str)
 {
 	int		line;
 	int		col;
@@ -43,10 +43,7 @@ int	ft_board(char *str, int tetrinb)
 		line++;
 	}
 	board[4] = NULL;
-	ft_showtab(board);
-	ft_putchar('\n');
-	ft_fit(ft_united(board), tetrinb);
-	return (1); //////return 1, 0 is for testing for only one board
+	return (ft_united(board));
 }
 
 int	ft_check(char *str)
@@ -80,12 +77,74 @@ int	ft_check(char *str)
 	return (1);
 }
 
+//t_tetri		*ft_pushbacktetri(t_tetri *tetri, char **board, int tetrinb)
+//{
+//	}
+
+t_tetri		*ft_lsttetri(t_tetri *tetri, char **board, int tetrinb)
+{
+	t_tetri	*new;
+	t_tetri	*tmp;
+
+	if (tetrinb == 0)
+	{
+		tetri = NULL;
+		if ((tetri = (t_tetri*)malloc(sizeof(t_tetri))) == NULL)
+			return (0);
+		tetri->letter = 'A';
+		tetri->start = tetri; //////////////
+		tetri->board = board;
+		tetri->next = NULL;
+	}
+	if (tetrinb != 0)
+	{
+		tmp = tetri;
+		if ((new = (t_tetri*)malloc(sizeof(t_tetri))) == NULL)
+			return (0);
+		new->letter = 'A' + tetrinb;
+		new->start = tetri->start;
+		new->board = board;
+		new->next = NULL;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	return (tetri);
+}
+
+void	ft_test(t_tetri	*tetri)
+{
+	int		i;
+
+	i = 0;
+	while (i < 15)
+	{
+		ft_putchar(tetri->letter);
+		ft_putchar('\n');
+		ft_showtab(tetri->board);
+		ft_putchar('\n');
+		if (tetri->next == NULL)
+		{
+			tetri = tetri->start;
+			ft_putchar(tetri->letter);
+			ft_putchar('\n');
+			ft_showtab(tetri->board);
+			ft_putchar('\n');
+			i++;
+		}
+		tetri = tetri->next;
+		i++;
+	}
+}
+
 int	ft_read(char *filename)
 {
 	int		fd;
 	int		rd;
 	int		tetrinb;
 	char	buf[21];
+	char	**board;
+	t_tetri		*tetri;
 
 	tetrinb = 0;
 	if ((fd = open(filename, O_RDONLY)) == -1)
@@ -97,10 +156,14 @@ int	ft_read(char *filename)
 			ft_putstr("error\n");
 			return (0);
 		}
-		if (ft_board(buf, tetrinb) == 0)
+		if ((board = ft_board(buf)) == 0)
 			return (0);
+		tetri = ft_lsttetri(tetri, board, tetrinb);
+		//calls to a ft which initialize then insert each board in the list
 		tetrinb++;
 	}
+//	ft_test(tetri);
+	ft_showtab(ft_fit(tetri, 2));
 	//if (rd == -1 || rd > BUF_SIZE)
 	//	return (0);
 	if (close(fd) == -1)
