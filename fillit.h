@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 01:51:50 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/14 02:24:14 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,20 @@
 typedef	struct	s_tetri
 {
 	char	**board;
-	char		letter;
+	char	letter;
+	int		x;
+	int		y;
 	struct	s_tetri	*next;
+	struct	s_tetri	*prev;
 	struct	s_tetri	*start;
 }				t_tetri;
+
+typedef	struct	d_list
+{
+		int		length;
+		t_tetri	*tail;
+		t_tetri	*head;
+}				y_list;
 
 typedef	struct	struct_poss
 {

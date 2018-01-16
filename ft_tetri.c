@@ -6,11 +6,12 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 01:37:22 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/14 04:46:16 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include "ft_erase.c"
 #include <stdio.h>
 
 /* 
@@ -53,20 +54,20 @@ char	**ft_map(char **map, int size)//should free the old map
  * called once in ft_fit if it's the first time we call the ft
 */
 
-char	**ft_set()
+char	**ft_set(int size)
 {
 	char	**map;
 	int		line;
 	int		col;
 
-	if ((map = (char **)malloc(sizeof(char *) * (2 + 1))) == NULL)
+	if ((map = (char **)malloc(sizeof(char *) * (size + 1))) == NULL)
 		return (0);
 	line = 0;
-	while (line < 2)
+	while (line < size)
 	{
 		col = 0;
-		map[line] = ft_strnew(3);
-		while (col < 2)
+		map[line] = ft_strnew(size + 1);
+		while (col < size)
 		{
 			map[line][col] = '.';
 			col++;
@@ -126,6 +127,33 @@ char	**ft_insert(char **map, t_tetri *tetri, int line, int col)
 	return (map);
 }
 
+t_tetri		*ft_fuckit(t_tetri *tetri, int size)
+{
+	char	letter;
+	t_tetri *tmp;
+
+	tmp = tetri;
+	letter = tetri->letter;
+	if (tetri->x < size)
+	{
+		if (tetri->y == size - 1)
+		{
+			tetri->y = -1;
+			tetri->x++;
+		}
+		tetri->y++;
+		/*
+		while (tetri->letter != letter)////////////
+		{
+			if (tetri->next != NULL)
+				tetri = tetri->next;
+			else
+				tetri = tetri->start;
+		}*/
+	}
+	return (tetri);
+}
+
 /*
  * this function check if a tetriminos can fit
  * calls to ft_set if it is the first time we call this ft
@@ -136,11 +164,17 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 	int				line;
 	int				col;
 	int				count;
+	static	int		placed;
 	static	char	**map;
 	s_poss	pos;
 
+
 	if (map == NULL)
-		map = ft_set();
+		placed = 0;
+	if (map == NULL)
+		map = ft_set(size);
+	ft_showtab(map);
+	ft_putchar('\n');
 	pos = ft_newpos(tetri->board);
 	line = 0;
 	while (map[line] != NULL)
@@ -151,13 +185,15 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 			count = 1;
 			if (map[line][col] == '.')
 			{
-				while ((line + pos.x[count]) < size && (col + pos.y[count]) < size && map[line + pos.x[count]][col + pos.y[count]] == '.')
+				while ((line + tetri->x + pos.x[count]) < size && (col + tetri->y + pos.y[count]) < size && map[line + tetri->x + pos.x[count]][col + tetri->y + pos.y[count]] == '.')
 				{
-					if (count == 4)
+					if (count == 3) //the tetri can fit
 					{
-						map = ft_insert(map, tetri, line, col);
-						if (tetri->next != NULL)
-							tetri = tetri->next;
+						map = ft_insert(map, tetri, line + tetri->x, col + tetri->y);
+						placed++;
+						if (tetri->next == NULL)
+							return (map);
+						tetri = tetri->next;
 						ft_fit(tetri, size);
 						return (map);
 					}
@@ -168,9 +204,25 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 		}
 		line++;
 	}
-	if (tetri->next == NULL)
-		return (map);
-	map = ft_map(map, size++);
+	//the tetri couldnt fit in the board
+	//cycle through the board to get the previous tetri
+//	map = ft_erase(map, 'A');
+	if (tetri->x == size - 1 && tetri->y == size - 1)// should verify this before increasing with fuckit
+	{
+		ft_putstr("\nincreasing\n");
+		tetri->x = 0;
+		tetri->y = 0;
+		map = ft_map(map, size++);
+	}
+	map = ft_clean(map);
+	tetri = tetri->start;
+	ft_fuckit(tetri, size);
+/*	ft_putchar('{');
+	ft_putstr(ft_itoa(tetri->x));
+	ft_putchar(':');
+	ft_putstr(ft_itoa(tetri->y));
+	ft_putchar('}');
+	ft_putchar('\n');*/
 	ft_fit(tetri, size);
 	return (map);
 }

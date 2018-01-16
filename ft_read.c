@@ -6,13 +6,14 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 01:36:26 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/14 03:41:06 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "ft_tetri.c"
 #include "ft_united.c"
+#include "ft_minsize.c"
 #include <stdio.h>
 
 char	**ft_board(char *str)
@@ -94,7 +95,10 @@ t_tetri		*ft_lsttetri(t_tetri *tetri, char **board, int tetrinb)
 		tetri->letter = 'A';
 		tetri->start = tetri; //////////////
 		tetri->board = board;
+		tetri->x = 0;
+		tetri->y = 0;
 		tetri->next = NULL;
+		
 	}
 	if (tetrinb != 0)
 	{
@@ -104,6 +108,8 @@ t_tetri		*ft_lsttetri(t_tetri *tetri, char **board, int tetrinb)
 		new->letter = 'A' + tetrinb;
 		new->start = tetri->start;
 		new->board = board;
+		new->x = 0;
+		new->y = 0;
 		new->next = NULL;
 		while (tmp->next != NULL)
 			tmp = tmp->next;
@@ -132,6 +138,7 @@ void	ft_test(t_tetri	*tetri)
 			ft_putchar('\n');
 			i++;
 		}
+		tetri->letter = tetri->letter + 1;
 		tetri = tetri->next;
 		i++;
 	}
@@ -162,8 +169,8 @@ int	ft_read(char *filename)
 		//calls to a ft which initialize then insert each board in the list
 		tetrinb++;
 	}
-//	ft_test(tetri);
-	ft_showtab(ft_fit(tetri, 2));
+	//ft_test(tetri);
+	ft_showtab(ft_fit(tetri, ft_minsize(2)));// call to showtab here
 	//if (rd == -1 || rd > BUF_SIZE)
 	//	return (0);
 	if (close(fd) == -1)
