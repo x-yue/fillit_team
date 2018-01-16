@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 03:41:06 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/16 22:46:41 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,20 @@ int	ft_check(char *str)
 {
 	int		i;
 	int		count;
+	int		hnb;
 
 	if (ft_strlen(str) != 21)
 		return (0);
 	i = 0;
 	count = 0;
+	hnb = 0;
 	while (str[i] != '\0')
 	{
 		if ((str[i] != '.' && str[i] != '#' && str[i] != '\n'))
 			return (0);
 	if (str[i] == '#')
 	{
+		hnb++;
 		if (i <= 15 && str[i + 5] == '#')
 			count++;
 		if (i >= 5 && str[i - 5] == '#')
@@ -73,7 +76,10 @@ int	ft_check(char *str)
 	}
 		i++;
 	}
-	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n')
+	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n' || str[20] != '\n' || hnb != 4)
+		return (0);
+	ft_putstr(ft_itoa(count));
+	if (count != 6 && count != 8)
 		return (0);
 	return (1);
 }

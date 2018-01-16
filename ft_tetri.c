@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 04:46:16 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/16 22:36:17 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,8 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 		placed = 0;
 	if (map == NULL)
 		map = ft_set(size);
-	ft_showtab(map);
-	ft_putchar('\n');
+//	ft_showtab(map);
+//	ft_putchar('\n');
 	pos = ft_newpos(tetri->board);
 	line = 0;
 	while (map[line] != NULL)
