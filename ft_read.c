@@ -6,18 +6,19 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 00:15:51 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 00:53:43 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "ft_tetri.c"
+#include "ft_map.c"
 #include "ft_united.c"
 #include "ft_minsize.c"
 #include <stdio.h>
 
 /*
-** this function turns the string sent by ft_read into a 2D board 
+** this function turns the string sent by ft_read into a 2D board
 */
 
 char	**ft_board(char *str)
@@ -123,27 +124,6 @@ y_list	*ft_lsttetri(y_list *lst, char **board, int tetrinb)
 	return (lst);
 }
 
-/*
-** this function prints the final map
-*/
-
-void	ft_showtab(char **board)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (board[i] != NULL)
-	{
-		j = 0;
-		while (board[i][j] != '\0')
-		{
-			ft_putchar(board[i][j]);
-			j++;
-		}
-		i++;
-	}
-}
 
 /*
 ** this function reads the file containing the tetriminos,

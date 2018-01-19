@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 00:10:51 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 00:52:15 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ typedef	struct	d_list
 		t_tetri	*head;
 }				y_list;
 
-typedef	struct	struct_poss
+typedef	struct	struct_pos
 {
 	int		x[4];
 	int		y[4];
-}			s_poss;
+}			s_pos;
 
 typedef	struct	board_struct //only if board needs shrinking
 {
@@ -86,7 +86,7 @@ char	**ft_united(char **board);
 //tetri.c ft
 char	**ft_map(char **map, int size);
 char	**ft_set(int size);
-s_poss	ft_getpos(char **board, int call);
-char	**ft_insert(char **map, t_tetri *tetri, int line, int col);
+s_pos	ft_getpos(char **board);
+char	**ft_insert(char **map, t_tetri *tetri, int line, int col, s_pos pos);
 char	**ft_fit(t_tetri *tetri, int size);
 #endif
