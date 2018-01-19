@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 01:46:22 by yuxu              #+#    #+#             */
-/*   Updated: 2018/01/14 02:16:52 by yuxu             ###   ########.fr       */
+/*   Updated: 2018/01/14 03:00:17 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,24 @@ char	**ft_erase(char **map, char letter)
 	return(map);
 }
 
-void	ft_showtab(char **board)
+char	**ft_clean(char **map)
 {
-	int line;
+	int	line;
+	int col;
 
 	line = 0;
-	while (board[line] != NULL)
+	while (map[line] != NULL)
 	{
-		ft_putstr(board[line]);
+		col = 0;
+		while(map[line][col] != '\n')
+		{
+			if (map[line][col] != '.')
+				map[line][col] = '.';
+			col++;
+		}
 		line++;
 	}
-}
+	return(map);
 
-int		main(void)
-{
-	char letter;
-	char **map;
 
-	letter = 'S';
-	map = ft_strsplit("sssNNS..\n .BB.SSS\n ..SS..\n .LJKFD....S\n", ' ');
-	 ft_showtab(map);
-	 ft_putchar('\n');
-	 ft_showtab(ft_erase(map, letter));
-	//printf("%s",ft_erase(map, letter));
-	return 0;
 }
