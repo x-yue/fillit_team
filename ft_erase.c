@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/14 01:46:22 by yuxu              #+#    #+#             */
-/*   Updated: 2018/01/14 03:00:17 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/19 23:34:32 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**ft_erase(char **map, char letter)
 	while (map[line] != NULL)
 	{
 		col = 0;
-		while(map[line][col] != '\n')
+		while (map[line][col] != '\n')
 		{
 			if (map[line][col] == letter)
 				map[line][col] = '.';
@@ -31,7 +31,7 @@ char	**ft_erase(char **map, char letter)
 		}
 		line++;
 	}
-	return(map);
+	return (map);
 }
 
 char	**ft_clean(char **map)
@@ -43,7 +43,7 @@ char	**ft_clean(char **map)
 	while (map[line] != NULL)
 	{
 		col = 0;
-		while(map[line][col] != '\n')
+		while (map[line][col] != '\n')
 		{
 			if (map[line][col] != '.')
 				map[line][col] = '.';
@@ -51,7 +51,5 @@ char	**ft_clean(char **map)
 		}
 		line++;
 	}
-	return(map);
-
-
+	return (map);
 }
