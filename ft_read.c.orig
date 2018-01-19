@@ -6,7 +6,11 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2018/01/16 23:53:25 by ablin            ###   ########.fr       */
+=======
+/*   Updated: 2018/01/16 22:46:41 by yuxu             ###   ########.fr       */
+>>>>>>> d3fc2d67a87ff1ceb65abdd6f2cb0f9ee012f41e
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +82,10 @@ int	ft_check(char *str)
 	}
 	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n' || str[20] != '\n' || hnb != 4)
 		return (0);
+<<<<<<< HEAD
+=======
+	ft_putstr(ft_itoa(count));
+>>>>>>> d3fc2d67a87ff1ceb65abdd6f2cb0f9ee012f41e
 	if (count != 6 && count != 8)
 		return (0);
 	return (1);

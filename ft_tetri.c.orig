@@ -172,6 +172,11 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 		placed = 0;
 	if (map == NULL)
 		map = ft_set(size);
+<<<<<<< HEAD
+=======
+//	ft_showtab(map);
+//	ft_putchar('\n');
+>>>>>>> d3fc2d67a87ff1ceb65abdd6f2cb0f9ee012f41e
 	pos = ft_newpos(tetri->board);
 	line = 0;
 	while (map[line] != NULL)
