@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/16 23:53:25 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 00:15:51 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 #include <stdio.h>
 
 /*
- * this function turns the string sent by ft_read into a 2D board
+** this function turns the string sent by ft_read into a 2D board 
 */
 
-char	**ft_board(char *str)//possible struct for maximum shrinking
+char	**ft_board(char *str)
 {
 	int		line;
 	int		col;
@@ -50,18 +50,18 @@ char	**ft_board(char *str)//possible struct for maximum shrinking
 }
 
 /*
- * this function checks the validity of the tetriminos while it's still in the form of a string
- * it checks : the hashtag number (hnb), if the hashtags are adjacent (count) and if the tetriminos only contains '\n' '#' and '.'
+** this function checks the validity of the tetriminos while it's still
+** in the form of a string
+** it checks : the hashtag number (hnb), if the hashtags are adjacent (count)
+** and if the tetriminos only contains '\n' '#' and '.'
 */
 
-int	ft_check(char *str)
+int		ft_check(char *str)
 {
 	int		i;
 	int		count;
 	int		hnb;
 
-	if (ft_strlen(str) != 21)
-		return (0);
 	i = 0;
 	count = 0;
 	hnb = 0;
@@ -82,20 +82,21 @@ int	ft_check(char *str)
 		}
 		i++;
 	}
-	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n' || str[20] != '\n' || hnb != 4 || (count != 6 && count != 8))
+	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n'
+		|| str[20] != '\n' || hnb != 4 || (count != 6 && count != 8))
 		return (0);
 	return (1);
 }
 
 /*
- * this function creates a new node which holds
- * -the letter of the tetriminos
- * -the tetriminos
- * -the first spot where we'll try to placed the tetriminos
- * -the previous node address
+** this function creates a new node which holds
+** -the letter of the tetriminos
+** -the tetriminos
+** -the first spot where we'll try to placed the tetriminos
+** -the previous node address
 */
 
-y_list		*ft_lsttetri(y_list *lst, char **board, int tetrinb)
+y_list	*ft_lsttetri(y_list *lst, char **board, int tetrinb)
 {
 	t_tetri	*tetri;
 
@@ -123,21 +124,21 @@ y_list		*ft_lsttetri(y_list *lst, char **board, int tetrinb)
 }
 
 /*
- * this function prints the final map
+** this function prints the final map
 */
 
-void	ft_showtab(char **arr)
+void	ft_showtab(char **board)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (arr[i] != NULL)
+	while (board[i] != NULL)
 	{
 		j = 0;
-		while (arr[i][j] != '\0')
+		while (board[i][j] != '\0')
 		{
-			ft_putchar(arr[i][j]);
+			ft_putchar(board[i][j]);
 			j++;
 		}
 		i++;
@@ -145,11 +146,13 @@ void	ft_showtab(char **arr)
 }
 
 /*
- * this function reads the file containing the tetriminos, sets the double chained list, calls to ft_check, then to ft_lsttetri and ft_board
- * ultimately, it calls to ft_fit
+** this function reads the file containing the tetriminos,
+** sets the double chained list, calls to ft_check,
+** then to ft_lsttetri and ft_board
+** ultimately, it calls to ft_fit
 */
 
-int	ft_read(char *filename)
+int		ft_read(char *filename)
 {
 	f_struct	f;
 	t_tetri		*tetri;
@@ -161,19 +164,20 @@ int	ft_read(char *filename)
 	lst->tail = NULL;
 	lst->head = NULL;
 	f.tetrinb = 0;
+	f.end = 0;
 	if ((f.fd = open(filename, O_RDONLY)) == -1)
 		return (0);
-	while ((f.rd = read(f.fd, f.buf, 21)) == 21)
+	while ((f.rd = read(f.fd, f.buf, 21)) >= 20)
 	{
 		if (ft_check(f.buf) == 0)
 			return (0);
 		ft_lsttetri(lst, ft_board(f.buf), f.tetrinb++);
 		tetri = lst->head;
+		if (f.rd == 20)
+			f.end = 1;
 	}
-	if (f.rd != 20)
+	if (close(f.fd) == -1 || f.end != 1)
 		return (0);
 	ft_showtab(ft_fit(tetri, ft_minsize(f.tetrinb)));
-	if (close(f.fd) == -1)
-		return (0);
 	return (1);
 }

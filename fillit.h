@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 02:24:14 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 00:10:51 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef	struct	file_struct
 	int		fd;
 	int		rd;
 	int		tetrinb;
+	int		end;
 	char	buf[21];
 }				f_struct;
 
