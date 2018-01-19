@@ -42,20 +42,22 @@ typedef	struct	struct_poss
 	int		y[4];
 }			s_poss;
 
-typedef	struct	file_list //can remove
+typedef	struct	board_struct //only if board needs shrinking
+{
+	int		line;
+	int		col;
+	int		count;
+	int		i;
+	char	**board;
+}				b_struct;
+
+typedef	struct	file_struct
 {
 	int		fd;
 	int		rd;
-	int		i;
+	int		tetrinb;
 	char	buf[21];
-}				f_list;
-
-typedef	struct	three_int_list
-{
-	int		i;
-	int		j;
-	int		k;
-}				i_list;
+}				f_struct;
 
 typedef	struct	united_struct
 {

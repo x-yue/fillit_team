@@ -23,7 +23,9 @@ int		main(int ac, char **av)
 		ft_putstr("usage: fillit source_file");
 		return (0);
 	}
-	if (ft_read(av[1]) ==  0)
+	if (ft_read(av[1]) == 0)
+	{
+		ft_putstr("error\n");
 		return (0);
-		//ft_putstr(ft_strdup("error\n"));
+	}
 }

@@ -159,7 +159,7 @@ t_tetri		*ft_fuckit(t_tetri *tetri, int size)
  * calls to ft_set if it is the first time we call this ft
 */
 
-char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
+char		**ft_fit(t_tetri *tetri, int size)
 {
 	int				line;
 	int				col;
@@ -184,7 +184,7 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 			count = 0;
 				while ((line + tetri->x + pos.x[count]) < size && (col + tetri->y + pos.y[count]) < size && map[line + tetri->x + pos.x[count]][col + tetri->y + pos.y[count]] == '.')
 				{
-					if (count == 3) //the tetri can fit
+					if (count == 3)
 					{
 						map = ft_insert(map, tetri, line + tetri->x, col + tetri->y);
 						placed++;
@@ -201,10 +201,7 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 		}
 		line++;
 	}
-	//the tetri couldnt fit in the board
-	//cycle through the board to get the previous tetri
-//	map = ft_erase(map, 'A');
-	if (tetri->prev == NULL && tetri->x == size - 1 && tetri->y == size - 1)// should verify this before increasing with fuckit
+	if (tetri->prev == NULL && tetri->x == size - 1 && tetri->y == size - 1)
 	{
 		ft_putstr("\nincreasing\n");
 		tetri->x = 0;
@@ -219,15 +216,6 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 		map = ft_erase(map, tetri->letter);
 	}
 	ft_fuckit(tetri, size);
-	//tetri = tetri->start;
-/*	ft_putchar('{');
-	ft_putstr(ft_itoa(tetri->x));
-	ft_putchar(':');
-	ft_putstr(ft_itoa(tetri->y));
-	ft_putchar('}');
-	ft_putchar('\n');*/
 	ft_fit(tetri, size);
-	//ft_putstr(ft_itoa(placed));
-	//ft_putchar('\n');
 	return (map);
 }
