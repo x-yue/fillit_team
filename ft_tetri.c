@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 04:46:16 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/16 22:36:17 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,13 +168,10 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 	static	char	**map;
 	s_poss	pos;
 
-
 	if (map == NULL)
 		placed = 0;
 	if (map == NULL)
 		map = ft_set(size);
-	ft_showtab(map);
-	ft_putchar('\n');
 	pos = ft_newpos(tetri->board);
 	line = 0;
 	while (map[line] != NULL)
@@ -182,9 +179,9 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 		col = 0;
 		while (map[line][col] != '\0')
 		{
-			count = 1;
-			if (map[line][col] == '.')
+			if (map[line + pos.x[0]][col + pos.y[0]] == '.')
 			{
+			count = 0;
 				while ((line + tetri->x + pos.x[count]) < size && (col + tetri->y + pos.y[count]) < size && map[line + tetri->x + pos.x[count]][col + tetri->y + pos.y[count]] == '.')
 				{
 					if (count == 3) //the tetri can fit
@@ -207,16 +204,22 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 	//the tetri couldnt fit in the board
 	//cycle through the board to get the previous tetri
 //	map = ft_erase(map, 'A');
-	if (tetri->x == size - 1 && tetri->y == size - 1)// should verify this before increasing with fuckit
+	if (tetri->prev == NULL && tetri->x == size - 1 && tetri->y == size - 1)// should verify this before increasing with fuckit
 	{
 		ft_putstr("\nincreasing\n");
 		tetri->x = 0;
 		tetri->y = 0;
 		map = ft_map(map, size++);
 	}
-	map = ft_clean(map);
-	tetri = tetri->start;
+	if (tetri->prev != NULL && tetri->x == size - 1 && tetri->y == size - 1)
+	{
+		tetri->x = 0;
+		tetri->y = 0;
+		tetri = tetri->prev;
+		map = ft_erase(map, tetri->letter);
+	}
 	ft_fuckit(tetri, size);
+	//tetri = tetri->start;
 /*	ft_putchar('{');
 	ft_putstr(ft_itoa(tetri->x));
 	ft_putchar(':');
@@ -224,5 +227,7 @@ char		**ft_fit(t_tetri *tetri, int size)//need to make it shorter etc
 	ft_putchar('}');
 	ft_putchar('\n');*/
 	ft_fit(tetri, size);
+	//ft_putstr(ft_itoa(placed));
+	//ft_putchar('\n');
 	return (map);
 }

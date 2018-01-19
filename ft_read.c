@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/14 03:41:06 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/16 23:53:25 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,20 @@ int	ft_check(char *str)
 {
 	int		i;
 	int		count;
+	int		hnb;
 
 	if (ft_strlen(str) != 21)
 		return (0);
 	i = 0;
 	count = 0;
+	hnb = 0;
 	while (str[i] != '\0')
 	{
 		if ((str[i] != '.' && str[i] != '#' && str[i] != '\n'))
 			return (0);
 	if (str[i] == '#')
 	{
+		hnb++;
 		if (i <= 15 && str[i + 5] == '#')
 			count++;
 		if (i >= 5 && str[i - 5] == '#')
@@ -73,16 +76,43 @@ int	ft_check(char *str)
 	}
 		i++;
 	}
-	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n')
+	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n' || str[20] != '\n' || hnb != 4)
+		return (0);
+	if (count != 6 && count != 8)
 		return (0);
 	return (1);
 }
 
-//t_tetri		*ft_pushbacktetri(t_tetri *tetri, char **board, int tetrinb)
-//{
-//	}
+y_list		*ft_lsttetri(y_list *lst, char **board, int tetrinb)
+{
+	t_tetri	*tetri;
 
-t_tetri		*ft_lsttetri(t_tetri *tetri, char **board, int tetrinb)
+	if ((tetri = (t_tetri*)malloc(sizeof(t_tetri))) == NULL)
+		return (0);
+	tetri->letter = 'A' + tetrinb;
+	tetri->board = board;
+	tetri->x = 0;
+	tetri->y = 0;
+	tetri->next = NULL;
+	if (lst->tail == NULL)
+	{
+		tetri->prev = NULL;
+		lst->head = tetri;
+		lst->tail = tetri;
+	}
+	else
+	{
+		lst->tail->next = tetri;
+		tetri->prev = lst->tail;
+		lst->tail = tetri;
+	}
+	lst->length++;
+	return (lst);
+}
+
+
+
+t_tetri		*xxft_lsttetri(t_tetri *tetri, char **board, int tetrinb)
 {
 	t_tetri	*new;
 	t_tetri	*tmp;
@@ -131,14 +161,16 @@ void	ft_test(t_tetri	*tetri)
 		ft_putchar('\n');
 		if (tetri->next == NULL)
 		{
-			tetri = tetri->start;
-			ft_putchar(tetri->letter);
-			ft_putchar('\n');
-			ft_showtab(tetri->board);
-			ft_putchar('\n');
-			i++;
+			while (tetri->prev != NULL)
+			{
+				tetri = tetri->prev;
+				ft_putchar(tetri->letter);
+				ft_putchar('\n');
+				ft_showtab(tetri->board);
+				ft_putchar('\n');
+				i++;
+			}
 		}
-		tetri->letter = tetri->letter + 1;
 		tetri = tetri->next;
 		i++;
 	}
@@ -151,8 +183,14 @@ int	ft_read(char *filename)
 	int		tetrinb;
 	char	buf[21];
 	char	**board;
-	t_tetri		*tetri;
+	t_tetri	*tetri;// replace with lst and set lst
+	y_list	*lst;
 
+	if ((lst = (y_list*)malloc(sizeof(y_list))) == NULL)
+		return (0);
+	lst->length = 0;
+	lst->tail = NULL;
+	lst->head = NULL;
 	tetrinb = 0;
 	if ((fd = open(filename, O_RDONLY)) == -1)
 		return (0);
@@ -165,12 +203,14 @@ int	ft_read(char *filename)
 		}
 		if ((board = ft_board(buf)) == 0)
 			return (0);
-		tetri = ft_lsttetri(tetri, board, tetrinb);
+		//tetri = ft_lsttetri(tetri, board, tetrinb);//lst
+		ft_lsttetri(lst, board, tetrinb);//lst
+		tetri = lst->head;
 		//calls to a ft which initialize then insert each board in the list
 		tetrinb++;
 	}
 	//ft_test(tetri);
-	ft_showtab(ft_fit(tetri, ft_minsize(2)));// call to showtab here
+	ft_showtab(ft_fit(tetri, ft_minsize(tetrinb)));// call to showtab here //lst
 	//if (rd == -1 || rd > BUF_SIZE)
 	//	return (0);
 	if (close(fd) == -1)
