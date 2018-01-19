@@ -123,6 +123,28 @@ y_list		*ft_lsttetri(y_list *lst, char **board, int tetrinb)
 }
 
 /*
+ * this function prints the final map
+*/
+
+void	ft_showtab(char **arr)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		j = 0;
+		while (arr[i][j] != '\0')
+		{
+			ft_putchar(arr[i][j]);
+			j++;
+		}
+		i++;
+	}
+}
+
+/*
  * this function reads the file containing the tetriminos, sets the double chained list, calls to ft_check, then to ft_lsttetri and ft_board
  * ultimately, it calls to ft_fit
 */
@@ -130,8 +152,8 @@ y_list		*ft_lsttetri(y_list *lst, char **board, int tetrinb)
 int	ft_read(char *filename)
 {
 	f_struct	f;
-	t_tetri	*tetri;
-	y_list	*lst;
+	t_tetri		*tetri;
+	y_list		*lst;
 
 	if ((lst = (y_list*)malloc(sizeof(y_list))) == NULL)
 		return (0);
@@ -141,14 +163,14 @@ int	ft_read(char *filename)
 	f.tetrinb = 0;
 	if ((f.fd = open(filename, O_RDONLY)) == -1)
 		return (0);
-	while ((f.rd = read(f.fd, f.buf, 21)) >= 20)
+	while ((f.rd = read(f.fd, f.buf, 21)) == 21)
 	{
 		if (ft_check(f.buf) == 0)
 			return (0);
 		ft_lsttetri(lst, ft_board(f.buf), f.tetrinb++);
 		tetri = lst->head;
 	}
-	if (f.rd != 0)
+	if (f.rd != 20)
 		return (0);
 	ft_showtab(ft_fit(tetri, ft_minsize(f.tetrinb)));
 	if (close(f.fd) == -1)
