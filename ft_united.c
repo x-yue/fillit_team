@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:34:42 by yuxu              #+#    #+#             */
-/*   Updated: 2017/12/19 22:37:56 by yuxu             ###   ########.fr       */
+/*   Updated: 2018/01/19 23:31:57 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,24 +130,3 @@ char	**ft_united(char **board)
 	board = ft_left(board);
 	return (board);
 }
-/*
-int		main(void)
-{
-	int n;
-	char *str1 = "....\n ....\n ....\n .#..\n";
-	char **test1 = ft_strsplit(str1, ' ');
-	n = 0;
-	while (n < 4)
-	{
-		printf("original: %s\n", test1[n]);
-		n++;
-	}
-	n = 0;
-	char **restult = ft_united(test1);
-	while (n < 4)
-	{
-		printf("result: %s\n", restult[n]);
-		n++;
-	}
-	return 0;
-}*/
