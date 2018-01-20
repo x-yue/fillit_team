@@ -150,14 +150,13 @@ int			ft_read(char *filename)
 	t_tetri		*tetri;
 	t_double	*lst;
 
-	if ((lst = (t_double*)malloc(sizeof(t_double))) == NULL)
+	if (((lst = (t_double*)malloc(sizeof(t_double))) == NULL ) ||
+	((f.fd = open(filename, O_RDONLY)) == -1))
 		return (0);
 	lst->tail = NULL;
 	lst->head = NULL;
 	f.tetrinb = 0;
 	f.end = 0;
-	if ((f.fd = open(filename, O_RDONLY)) == -1)
-		return (0);
 	while ((f.rd = read(f.fd, f.buf, 21)) >= 20)
 	{
 		if (ft_check(f.buf) == 0)
