@@ -75,8 +75,9 @@ int		first_left(char **board)
 char	**ft_left(char **board)
 {
 	t_move	uni;
+	char	tmp;
 
-	uni.tmp = malloc_it();
+	//uni.tmp = malloc_it();
 	uni.l = 0;
 	uni.mv_l = first_left(board);
 	while (uni.l < 4)
@@ -88,16 +89,16 @@ char	**ft_left(char **board)
 			{
 				if (uni.i > 0 && uni.mv_l > 0)
 				{
-					uni.tmp[uni.l][uni.i] = board[uni.l][uni.i];
+					tmp = board[uni.l][uni.i];
 					board[uni.l][uni.i] = board[uni.l][uni.i - uni.mv_l];
-					board[uni.l][uni.i - uni.mv_l] = uni.tmp[uni.l][uni.i];
+					board[uni.l][uni.i - uni.mv_l] = tmp;
 				}
 			}
 			uni.i++;
 		}
 		uni.l++;
 	}
-	free(uni.tmp);
+	//free(uni.tmp);
 	return (board);
 }
 

@@ -73,6 +73,7 @@ char	**ft_map(char **map, int size)
 	new.newmap[new.line][new.col + 1] = '\0';
 	new.newmap[new.line + 1] = NULL;
 	free(map);
+	map = NULL;
 	return (new.newmap);
 }
 
