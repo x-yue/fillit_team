@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 05:25:08 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 05:34:25 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef	struct	united_struct
 y_list	*ft_lsttetri(y_list *lst, char **board, int tetrinb);
 char	**ft_board(char *str);
 int		ft_check(char *str);
+int		ft_minsize(int tetrinb);
 int		ft_read(char *filename);
 
 //move
@@ -88,6 +89,7 @@ char	**ft_map(char **map, int size);
 char	**ft_set(int size);
 char	**ft_insert(char **map, t_tetri *tetri, int line, int col);
 void	ft_showtab(char **board);
+char	**ft_erase(char **map, char letter);
 
 //solve
 t_tetri	*ft_tetripos(t_tetri *tetri, int size);

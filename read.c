@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 05:24:21 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 05:34:40 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_tetri.c"
 #include "ft_map.c"
 #include "ft_united.c"
-#include "ft_minsize.c"
 #include <stdio.h>
 
 /*
@@ -118,6 +117,28 @@ y_list	*ft_lsttetri(y_list *lst, char **board, int tetrinb)
 		lst->tail = tetri;
 	}
 	return (lst);
+}
+
+/*
+** this ft returns the minimum size of the map taking the nb of tetriminos
+*/
+
+int		ft_minsize(int tetrinb)
+{
+	int	hashnb;
+	int size;
+
+	size = 2;
+	hashnb = tetrinb * 4;
+	if (hashnb <= 0)
+		return (0);
+	while (size * size <= hashnb)
+	{
+		size++;
+		if (size * size >= hashnb)
+			return (size);
+	}
+	return (0);
 }
 
 /*

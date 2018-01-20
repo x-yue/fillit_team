@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 00:39:57 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 05:24:03 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 05:31:57 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,28 @@ void	ft_showtab(char **board)
 		}
 		i++;
 	}
+}
+
+/*
+** this ft erase a specific tetriminos from the map
+*/
+
+char	**ft_erase(char **map, char letter)
+{
+	int	line;
+	int col;
+
+	line = 0;
+	while (map[line] != NULL)
+	{
+		col = 0;
+		while (map[line][col] != '\n')
+		{
+			if (map[line][col] == letter)
+				map[line][col] = '.';
+			col++;
+		}
+		line++;
+	}
+	return (map);
 }
