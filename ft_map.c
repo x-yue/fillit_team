@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 00:39:57 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 00:53:59 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 01:27:11 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**ft_set(int size)
 ** called in ft_fit if the tetriminos couldnt fit
 */
 
-char	**ft_map(char **map, int size)//should free the old map
+char	**ft_map(char **map, int size)
 {
 	char	**newmap;
 	int		line;
@@ -65,8 +65,7 @@ char	**ft_map(char **map, int size)//should free the old map
 			newmap[line][col] = map[line][col];
 		newmap[line][col] = '.';
 		newmap[line][col + 1] = '\n';
-		newmap[line][col + 2] = '\0';
-		line++;
+		newmap[line++][col + 2] = '\0';
 	}
 	col = -1;
 	newmap[line] = ft_strnew(size + 1);
@@ -83,10 +82,12 @@ char	**ft_map(char **map, int size)//should free the old map
 ** called in ft_fit
 */
 
-char	**ft_insert(char **map, t_tetri *tetri, int line, int col, s_pos pos)
+char	**ft_insert(char **map, t_tetri *tetri, int line, int col)
 {
 	int		count;
+	s_pos	pos;
 
+	pos = ft_getpos(tetri->board);
 	count = 0;
 	while (count < 4)
 	{
