@@ -6,13 +6,11 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:34:42 by yuxu              #+#    #+#             */
-/*   Updated: 2018/01/20 05:24:48 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 06:09:40 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "fillit.h"
-#include <stdio.h>
 
 char	**malloc_it(void)
 {
@@ -47,7 +45,7 @@ char	**ft_swap_up(char **board, int line, int i, int mv_up)
 
 int		first_left(char **board)
 {
-	nb_list	uni;
+	t_move	uni;
 
 	uni.n = 0;
 	uni.line = 0;
@@ -76,7 +74,7 @@ int		first_left(char **board)
 
 char	**ft_left(char **board)
 {
-	nb_list	uni;
+	t_move	uni;
 
 	uni.tmp = malloc_it();
 	uni.line = 0;
@@ -105,7 +103,7 @@ char	**ft_left(char **board)
 
 char	**ft_united(char **board)
 {
-	nb_list		uni;
+	t_move	uni;
 
 	uni.line = 0;
 	uni.hashtag_count = 0;

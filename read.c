@@ -6,21 +6,17 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 05:34:40 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 06:18:15 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include "ft_tetri.c"
-#include "ft_map.c"
-#include "ft_united.c"
-#include <stdio.h>
 
 /*
 ** this function turns the string sent by ft_read into a 2D board
 */
 
-char	**ft_board(char *str)
+char		**ft_board(char *str)
 {
 	int		line;
 	int		col;
@@ -56,7 +52,7 @@ char	**ft_board(char *str)
 ** and if the tetriminos only contains '\n' '#' and '.'
 */
 
-int		ft_check(char *str)
+int			ft_check(char *str)
 {
 	int		arr[3];
 
@@ -93,7 +89,7 @@ int		ft_check(char *str)
 ** -the previous node address
 */
 
-y_list	*ft_lsttetri(y_list *lst, char **board, int tetrinb)
+t_double	*ft_lsttetri(t_double *lst, char **board, int tetrinb)
 {
 	t_tetri	*tetri;
 
@@ -123,7 +119,7 @@ y_list	*ft_lsttetri(y_list *lst, char **board, int tetrinb)
 ** this ft returns the minimum size of the map taking the nb of tetriminos
 */
 
-int		ft_minsize(int tetrinb)
+int			ft_minsize(int tetrinb)
 {
 	int	hashnb;
 	int size;
@@ -148,13 +144,13 @@ int		ft_minsize(int tetrinb)
 ** ultimately, it calls to ft_fit
 */
 
-int		ft_read(char *filename)
+int			ft_read(char *filename)
 {
-	f_struct	f;
+	t_file		f;
 	t_tetri		*tetri;
-	y_list		*lst;
+	t_double	*lst;
 
-	if ((lst = (y_list*)malloc(sizeof(y_list))) == NULL)
+	if ((lst = (t_double*)malloc(sizeof(t_double))) == NULL)
 		return (0);
 	lst->tail = NULL;
 	lst->head = NULL;
@@ -174,6 +170,6 @@ int		ft_read(char *filename)
 	free(lst);
 	if (close(f.fd) == -1 || f.end != 1)
 		return (0);
-	ft_showtab(ft_fit(tetri, ft_getpos(tetri->board), ft_minsize(f.tetrinb)));
+	ft_showtab(ft_fit(tetri, ft_pos(tetri->board), ft_minsize(f.tetrinb)));
 	return (1);
 }

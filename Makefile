@@ -6,7 +6,7 @@
 #    By: yuxu <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/09 23:46:58 by yuxu              #+#    #+#              #
-#    Updated: 2018/01/20 05:27:25 by ablin            ###   ########.fr        #
+#    Updated: 2018/01/20 05:45:52 by ablin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME):
-	gcc -c $(FLAGS) $(SRCS)
-	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
+	gcc main.c -o $(NAME) $(FLAGS) $(SRCS) -L. libft.a
 
 clean:
 	/bin/rm -f $(OBJS)

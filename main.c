@@ -6,14 +6,11 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 20:27:48 by yuxu              #+#    #+#             */
-/*   Updated: 2018/01/20 05:25:29 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 05:46:25 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <sys/uio.h>
-#include <sys/types.h>
-#include "ft_read.c"
+#include "fillit.h"
 
 int		main(int ac, char **av)
 {

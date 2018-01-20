@@ -6,23 +6,22 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 05:34:56 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 06:17:18 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-#include <stdio.h>
 
 /*
 ** this function return the position of every hashtag of a tetriminos
 */
 
-s_pos		ft_getpos(char **board)
+t_pos		ft_pos(char **board)
 {
 	int		col;
 	int		line;
 	int		count;
-	s_pos	pos;
+	t_pos	pos;
 
 	line = 0;
 	count = 0;
@@ -80,17 +79,17 @@ char		**ft_unfit(t_tetri *tetri, char **map, int size)
 		map = ft_erase(map, tetri->letter);
 	}
 	ft_tetripos(tetri, size);
-	ft_fit(tetri, ft_getpos(tetri->board), size);
+	ft_fit(tetri, ft_pos(tetri->board), size);
 	return (map);
 }
 
-int			ft_checkpos(t_tetri *tetri, it_struct fit, char **map, int size)
+int			ft_checkpos(t_tetri *tetri, t_fit fit, char **map, int size)
 {
 	int		count;
-	s_pos	pos;
+	t_pos	pos;
 
 	count = 0;
-	pos = ft_getpos(tetri->board);
+	pos = ft_pos(tetri->board);
 	while ((fit.line + tetri->x + pos.x[count]) < size &&
 	(fit.col + tetri->y + pos.y[count]) < size && count < 4 &&
 	map[fit.line + tetri->x + pos.x[count]]
@@ -106,9 +105,9 @@ int			ft_checkpos(t_tetri *tetri, it_struct fit, char **map, int size)
 ** calls to ft_set if it is the first time we call this ft
 */
 
-char		**ft_fit(t_tetri *tetri, s_pos pos, int size)
+char		**ft_fit(t_tetri *tetri, t_pos pos, int size)
 {
-	it_struct		fit;
+	t_fit			fit;
 	static	char	**map;
 
 	if (map == NULL)
@@ -123,7 +122,7 @@ char		**ft_fit(t_tetri *tetri, s_pos pos, int size)
 				if ((ft_checkpos(tetri, fit, map, size)) == 4)
 				{
 					if (tetri->next != NULL)
-						ft_fit(tetri->next, ft_getpos(tetri->next->board), size);
+						ft_fit(tetri->next, ft_pos(tetri->next->board), size);
 					return (map);
 				}
 			fit.col++;

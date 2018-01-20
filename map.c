@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 00:39:57 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 05:31:57 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 06:16:40 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ char	**ft_map(char **map, int size)
 char	**ft_insert(char **map, t_tetri *tetri, int line, int col)
 {
 	int		count;
-	s_pos	pos;
+	t_pos	pos;
 
-	pos = ft_getpos(tetri->board);
+	pos = ft_pos(tetri->board);
 	count = 0;
 	while (count < 4)
 	{
