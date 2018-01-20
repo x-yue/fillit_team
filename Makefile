@@ -11,14 +11,15 @@
 # **************************************************************************** #
 
 NAME = fillit
-SRCS = read.c solve.c move.c map.c
+SRC = src/
+SRCS = src/read.c src/solve.c src/move.c src/map.c
 FLAGS = -Wall -Wextra -Werror
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME):
-	gcc main.c -o $(NAME) $(FLAGS) $(SRCS) -L. libft.a
+	gcc src/main.c -o $(NAME) $(FLAGS) $(SRCS) -L. lib/libft.a
 
 clean:
 	/bin/rm -f $(OBJS)
