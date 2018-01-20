@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 00:53:43 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 01:49:06 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,32 +59,29 @@ char	**ft_board(char *str)
 
 int		ft_check(char *str)
 {
-	int		i;
-	int		count;
-	int		hnb;
+	int		arr[3];
 
-	i = 0;
-	count = 0;
-	hnb = 0;
-	while (str[i] != '\0')
+	arr[0] = 0;
+	arr[1] = 0;
+	arr[2] = 0;
+	while (str[arr[0]] != '\0')
 	{
-		if ((str[i] != '.' && str[i] != '#' && str[i] != '\n'))
+		if ((str[arr[0]] != '.' && str[arr[0]] != '#' && str[arr[0]] != '\n'))
 			return (0);
-		if (str[i] == '#' && hnb++ <= 5)
+		if (str[arr[0]] == '#' && arr[1]++ <= 5)
 		{
-			if (i <= 15 && str[i + 5] == '#')
-				count++;
-			if (i >= 5 && str[i - 5] == '#')
-				count++;
-			if (i <= 18 && str[i + 1] == '#')
-				count++;
-			if (i >= 1 && str[i - 1] == '#')
-				count++;
+			if (arr[0] <= 15 && str[arr[0] + 5] == '#')
+				arr[2]++;
+			if (arr[0] >= 5 && str[arr[0] - 5] == '#')
+				arr[2]++;
+			if (arr[0] <= 18 && str[arr[0] + 1] == '#')
+				arr[2]++;
+			if (arr[0] >= 1 && str[arr[0] - 1] == '#')
+				arr[2]++;
 		}
-		i++;
+		arr[0]++;
 	}
-	if (str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n'
-		|| str[20] != '\n' || hnb != 4 || (count != 6 && count != 8))
+	if (arr[1] != 4 || (arr[2] != 6 && arr[2] != 8))
 		return (0);
 	return (1);
 }
