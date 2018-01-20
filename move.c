@@ -48,20 +48,20 @@ int		first_left(char **board)
 	t_move	uni;
 
 	uni.n = 0;
-	uni.line = 0;
-	while (uni.line < 4)
+	uni.l = 0;
+	while (uni.l < 4)
 	{
 		uni.i = 0;
 		while (uni.i <= 3 && uni.n < 4)
 		{
-			if (board[uni.line][uni.i] == '#')
+			if (board[uni.l][uni.i] == '#')
 			{
 				uni.k[uni.n] = uni.i;
 				uni.n++;
 			}
 			uni.i++;
 		}
-		uni.line++;
+		uni.l++;
 	}
 	uni.mv_l = uni.k[0];
 	while (uni.k[uni.n--] && uni.n > 0)
@@ -77,51 +77,56 @@ char	**ft_left(char **board)
 	t_move	uni;
 
 	uni.tmp = malloc_it();
-	uni.line = 0;
+	uni.l = 0;
 	uni.mv_l = first_left(board);
-	while (uni.line < 4)
+	while (uni.l < 4)
 	{
 		uni.i = 0;
 		while (uni.i <= 3)
 		{
-			if (board[uni.line][uni.i] == '#')
+			if (board[uni.l][uni.i] == '#')
 			{
 				if (uni.i > 0 && uni.mv_l > 0)
 				{
-					uni.tmp[uni.line][uni.i] = board[uni.line][uni.i];
-					board[uni.line][uni.i] = board[uni.line][uni.i - uni.mv_l];
-					board[uni.line][uni.i - uni.mv_l] = uni.tmp[uni.line]
-						[uni.i];
+					uni.tmp[uni.l][uni.i] = board[uni.l][uni.i];
+					board[uni.l][uni.i] = board[uni.l][uni.i - uni.mv_l];
+					board[uni.l][uni.i - uni.mv_l] = uni.tmp[uni.l][uni.i];
 				}
 			}
 			uni.i++;
 		}
-		uni.line++;
+		uni.l++;
 	}
+	free(uni.tmp);
 	return (board);
 }
+
+/*
+** Freed tmp here, it might be helpful
+** to consult with Andrea later
+*/
 
 char	**ft_united(char **board)
 {
 	t_move	uni;
 
-	uni.line = 0;
+	uni.l = 0;
 	uni.hashtag_count = 0;
-	while (uni.line < 4)
+	while (uni.l < 4)
 	{
 		uni.i = 0;
 		while (uni.i <= 3)
 		{
-			if (board[uni.line][uni.i] == '#')
+			if (board[uni.l][uni.i] == '#')
 			{
 				uni.hashtag_count++;
 				if (uni.hashtag_count == 1)
-					uni.mv_up = uni.line;
-				ft_swap_up(board, uni.line, uni.i, uni.mv_up);
+					uni.mv_up = uni.l;
+				ft_swap_up(board, uni.l, uni.i, uni.mv_up);
 			}
 			uni.i++;
 		}
-		uni.line++;
+		uni.l++;
 	}
 	board = ft_left(board);
 	return (board);

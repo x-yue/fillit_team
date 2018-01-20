@@ -57,10 +57,17 @@ typedef	struct		s_file
 	char			buf[21];
 }					t_file;
 
+typedef	struct		s_newmap
+{
+	char			**newmap;
+	int				line;
+	int				col;
+}					t_newmap;
+
 typedef	struct		s_move
 {
 	int				i;
-	int				line;
+	int				l;
 	int				hashtag_count;
 	int				mv_up;
 	int				mv_l;

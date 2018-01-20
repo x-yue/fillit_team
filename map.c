@@ -50,32 +50,30 @@ char	**ft_set(int size)
 
 char	**ft_map(char **map, int size)
 {
-	char	**newmap;
-	int		line;
-	int		col;
+	t_newmap	new;
 
-	if ((newmap = (char **)malloc(sizeof(char *) * (size + 2))) == NULL)
+	if ((new.newmap = (char **)malloc(sizeof(char *) * (size + 2))) == NULL)
 		return (0);
-	line = 0;
-	while (map[line] != NULL)
+	new.line = 0;
+	while (map[new.line] != NULL)
 	{
-		col = -1;
-		newmap[line] = ft_strnew(size + 2);
-		while (map[line][++col] != '\n')
-			newmap[line][col] = map[line][col];
-		newmap[line][col] = '.';
-		newmap[line][col + 1] = '\n';
-		newmap[line++][col + 2] = '\0';
+		new.col = -1;
+		new.newmap[new.line] = ft_strnew(size + 2);
+		while (map[new.line][++new.col] != '\n')
+			new.newmap[new.line][new.col] = map[new.line][new.col];
+		new.newmap[new.line][new.col] = '.';
+		new.newmap[new.line][new.col + 1] = '\n';
+		new.newmap[new.line++][new.col + 2] = '\0';
 	}
-	col = -1;
-	newmap[line] = ft_strnew(size + 1);
-	while (col++ < size)
-		newmap[line][col] = '.';
-	newmap[line][col] = '\n';
-	newmap[line][col + 1] = '\0';
-	newmap[line + 1] = NULL;
+	new.col = -1;
+	new.newmap[new.line] = ft_strnew(size + 1);
+	while (new.col++ < size)
+		new.newmap[new.line][new.col] = '.';
+	new.newmap[new.line][new.col] = '\n';
+	new.newmap[new.line][new.col + 1] = '\0';
+	new.newmap[new.line + 1] = NULL;
 	free(map);
-	return (newmap);
+	return (new.newmap);
 }
 
 /*
