@@ -6,28 +6,26 @@
 #    By: yuxu <marvin@42.fr>                        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/09 23:46:58 by yuxu              #+#    #+#              #
-#    Updated: 2017/12/11 20:50:14 by ablin            ###   ########.fr        #
+#    Updated: 2018/01/20 05:27:25 by ablin            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
-SRCS =
+SRCS = read.c solve.c move.c map.c
 FLAGS = -Wall -Wextra -Werror
+OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 $(NAME):
 	gcc -c $(FLAGS) $(SRCS)
-	ar rc $(NAME) *.o
-	ramlib $(NAME)
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 clean:
-	/bin/rm -f *.o
+	/bin/rm -f $(OBJS)
 
 fclean: clean
 	/bin/rm -f $(NAME)
 
 re: fclean all
-
-
-##	change SRC, and change all the *

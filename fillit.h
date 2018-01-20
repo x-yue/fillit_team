@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 01:24:21 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/20 05:25:08 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "libft.h"
+
 
 typedef	struct	s_tetri
 {
@@ -31,7 +32,6 @@ typedef	struct	s_tetri
 
 typedef	struct	d_list
 {
-		int		length;
 		t_tetri	*tail;
 		t_tetri	*head;
 }				y_list;
@@ -42,14 +42,12 @@ typedef	struct	struct_pos
 	int		y[4];
 }			s_pos;
 
-typedef	struct	board_struct //only if board needs shrinking
+typedef	struct	fit_struct
 {
-	int		line;
-	int		col;
-	int		count;
-	int		i;
-	char	**board;
-}				b_struct;
+	int				line;
+	int				col;
+	int				count;
+}				it_struct;
 
 typedef	struct	file_struct
 {
@@ -68,25 +66,33 @@ typedef	struct	united_struct
 	int		mv_up;
 	int		mv_l;
 	char	**tmp;
-	char	**tmp_line;
 	int		n;
 	int		k[4];
 }				nb_list;
 
-//ft_read ft
+//read
+y_list	*ft_lsttetri(y_list *lst, char **board, int tetrinb);
 char	**ft_board(char *str);
 int		ft_check(char *str);
 int		ft_read(char *filename);
-//ft_united ft
+
+//move
 char	**malloc_it(void);
 char	**ft_swap_up(char **board, int line, int i, int mv_up);
 int		first_left(char **board);
 char	**ft_left(char **board);
 char	**ft_united(char **board);
-//tetri.c ft
+
+//map
 char	**ft_map(char **map, int size);
 char	**ft_set(int size);
-s_pos	ft_getpos(char **board);
 char	**ft_insert(char **map, t_tetri *tetri, int line, int col);
-char	**ft_fit(t_tetri *tetri, int size);
+void	ft_showtab(char **board);
+
+//solve
+t_tetri	*ft_tetripos(t_tetri *tetri, int size);
+char	**ft_unfit(t_tetri *tetri, char **map, int size);
+int		ft_checkpos(t_tetri *tetri, it_struct *fit, char **map, int size);
+char	**ft_fit(t_tetri *tetri, s_pos pos, int size);
+s_pos	ft_getpos(char **board);
 #endif
