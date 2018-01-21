@@ -112,8 +112,6 @@ int			ft_lsttetri(t_double *lst, char **board, int tetrinb)
 		tetri->prev = lst->tail;
 		lst->tail = tetri;
 	}
-	ft_showtab(tetri->board);
-	ft_putchar('\n');
 	return (1);
 }
 
