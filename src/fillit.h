@@ -89,7 +89,7 @@ char				**ft_map(char **map, int size);
 char				**ft_set(int size);
 char				**ft_insert(char **map, t_tetri *tetri, int line, int col);
 char				**ft_erase(char **map, char letter);
-char				**ft_unfit(t_tetri *tetri, char **map, int size);
+int					ft_unfit(t_tetri *tetri, char **map, int size);
 char				**ft_fit(t_tetri *tetri, t_pos pos, int size);
 int					ft_check(char *str);
 int					ft_minsize(int tetrinb);

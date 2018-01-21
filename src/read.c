@@ -169,6 +169,6 @@ int			ft_read(char *filename)
 	free(lst);
 	if (close(f.fd) == -1 || f.end != 1)
 		return (0);
-	ft_showtab(ft_fit(tetri, ft_pos(tetri->board), ft_minsize(f.tetrinb)));
+	ft_showtab(ft_fit(tetri, ft_pos(tetri->board), 2)); //ft_minsize(f.tetrinb)));
 	return (1);
 }

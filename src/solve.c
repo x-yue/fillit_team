@@ -118,6 +118,8 @@ char		**ft_fit(t_tetri *tetri, t_pos pos, int size)
 			if (map[fit.line + pos.x[0]][fit.col + pos.y[0]] == '.')
 				if ((ft_checkpos(tetri, fit, map, size)) == 4)
 				{
+					//ft_showtab(map);
+					//ft_putchar('\n');
 					if (tetri->next != NULL)
 						ft_fit(tetri->next, ft_pos(tetri->next->board), size);
 					return (map);
