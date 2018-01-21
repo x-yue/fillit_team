@@ -45,11 +45,9 @@ t_pos		ft_pos(char **board)
 
 void		ft_tetripos(t_tetri *tetri, int size)
 {
-	char	letter;
 	t_tetri *tmp;
 
 	tmp = tetri;
-	letter = tetri->letter;
 	if (tetri->x < size)
 	{
 		if (tetri->y == size - 1)
@@ -61,25 +59,25 @@ void		ft_tetripos(t_tetri *tetri, int size)
 	}
 }
 
-char		**ft_unfit(t_tetri *tetri, char **map, int size)
+int		ft_unfit(t_tetri *tetri, char **map, int size)
 {
 	if (tetri->prev == NULL && tetri->x == size - 1 && tetri->y == size - 1)
 	{
 		ft_putstr("\nincreasing\n");
 		tetri->x = 0;
 		tetri->y = 0;
-		map = ft_map(map, size++);
+		map = ft_map(map, size++);///
 	}
 	if (tetri->prev != NULL && tetri->x == size - 1 && tetri->y == size - 1)
 	{
 		tetri->x = 0;
 		tetri->y = 0;
 		tetri = tetri->prev;
-		map = ft_erase(map, tetri->letter);
+		map = ft_erase(map, tetri->letter);//rmv map = if return size
 	}
 	ft_tetripos(tetri, size);
 	ft_fit(tetri, ft_pos(tetri->board), size);
-	return (map);
+	return (size);//return map?
 }
 
 int			ft_checkpos(t_tetri *tetri, t_fit fit, char **map, int size)
@@ -128,6 +126,6 @@ char		**ft_fit(t_tetri *tetri, t_pos pos, int size)
 		}
 		fit.line++;
 	}
-	map = ft_unfit(tetri, map, size);
+	size = ft_unfit(tetri, map, size);
 	return (map);
 }
