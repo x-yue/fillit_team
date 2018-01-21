@@ -89,11 +89,11 @@ int			ft_check(char *str)
 ** -the previous node address
 */
 
-t_double	*ft_lsttetri(t_double *lst, char **board, int tetrinb)
+int			ft_lsttetri(t_double *lst, char **board, int tetrinb)
 {
 	t_tetri	*tetri;
 
-	if ((tetri = (t_tetri*)malloc(sizeof(t_tetri))) == NULL)
+	if ((tetri = (t_tetri*)malloc(sizeof(t_tetri))) == NULL || board == NULL)
 		return (0);
 	tetri->letter = 'A' + tetrinb;
 	tetri->board = board;
@@ -112,7 +112,9 @@ t_double	*ft_lsttetri(t_double *lst, char **board, int tetrinb)
 		tetri->prev = lst->tail;
 		lst->tail = tetri;
 	}
-	return (lst);
+	ft_showtab(tetri->board);
+	ft_putchar('\n');
+	return (1);
 }
 
 /*

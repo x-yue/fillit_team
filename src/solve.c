@@ -43,7 +43,7 @@ t_pos		ft_pos(char **board)
 	return (pos);
 }
 
-t_tetri		*ft_tetripos(t_tetri *tetri, int size)
+void		ft_tetripos(t_tetri *tetri, int size)
 {
 	char	letter;
 	t_tetri *tmp;
@@ -59,7 +59,6 @@ t_tetri		*ft_tetripos(t_tetri *tetri, int size)
 		}
 		tetri->y++;
 	}
-	return (tetri);
 }
 
 char		**ft_unfit(t_tetri *tetri, char **map, int size)

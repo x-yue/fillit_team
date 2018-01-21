@@ -32,13 +32,14 @@ char	**malloc_it(void)
 
 char	**ft_swap_up(char **board, int line, int i, int mv_up)
 {
-	char	tmp;
+	char	**tmp;
 
+	tmp = malloc_it();
 	if (line > 0 && mv_up > 0)
 	{
-		tmp = board[line][i];
+		tmp[line][i] = board[line][i];
 		board[line][i] = board[line - mv_up][i];
-		board[line - mv_up][i] = tmp;
+		board[line - mv_up][i] = tmp[line][i];
 	}
 	return (board);
 }

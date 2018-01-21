@@ -76,9 +76,9 @@ typedef	struct		s_move
 	char			**tmp;
 }					t_move;
 
-t_double			*ft_lsttetri(t_double *lst, char **board, int tetrinb);
-t_tetri				*ft_tetripos(t_tetri *tetri, int size);
+int					ft_lsttetri(t_double *lst, char **board, int tetrinb);
 t_pos				ft_pos(char **board);
+void				ft_tetripos(t_tetri *tetri, int size);
 void				ft_showtab(char **board);
 char				**ft_board(char *str);
 char				**malloc_it(void);

@@ -107,6 +107,8 @@ void	ft_showtab(char **board)
 	int j;
 
 	i = 0;
+	if (board == NULL)
+		return;
 	while (board[i] != NULL)
 	{
 		j = 0;
