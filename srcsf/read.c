@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/25 00:25:06 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/25 00:29:24 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,45 +135,6 @@ int			ft_minsize(int tetrinb)
 			return (size);
 	}
 	return (0);
-}
-
-char		**ft_solve(t_tetri *tetri, char **map, int size, int tetrinb)
-{
-	int		placed;
-	t_pos	pos;
-
-	placed = 0;
-	pos = ft_pos(tetri->board);
-	while (placed != tetrinb)
-	{
-		if (ft_fit(tetri, ft_pos(tetri->board), size, map) == 1)
-		{
-			if (tetri->next == NULL)
-				return (map);
-			tetri = tetri->next;
-			placed++;
-		}
-		else
-		{
-			if (tetri->prev == NULL)
-			{
-				ft_putstr("\nincreasing\n");
-				tetri->x = 0;
-				tetri->y = 0;
-				map = ft_map(map, size++);
-			}
-			if (tetri->prev != NULL)
-			{
-				tetri->x = 0;
-				tetri->y = 0;
-				tetri = tetri->prev;
-				map = ft_erase(map, tetri->letter);
-				placed--;
-				ft_tetripos(tetri, size);
-			}
-		}
-	}
-	return (map);
 }
 
 /*

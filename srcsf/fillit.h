@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/24 23:38:58 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/25 00:30:54 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int					ft_lsttetri(t_double *lst, char **board, int tetrinb);
 t_pos				ft_pos(char **board);
 void				ft_tetripos(t_tetri *tetri, int size);
 void				ft_showtab(char **board);
+char				**ft_solve(t_tetri *tetri, char **map, int size, int tetrinb);
 char				**ft_board(char *str);
 char				**malloc_it(void);
 char				**ft_swap_up(char **board, int line, int i, int mv_up);

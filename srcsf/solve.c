@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/24 23:50:45 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/25 00:29:13 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,28 +76,43 @@ int			ft_checkpos(t_tetri *tetri, char **map, int size)
 	return (count);
 }
 
-int		ft_unfit(t_tetri *tetri, char **map, int size)
+char		**ft_solve(t_tetri *tetri, char **map, int size, int tetrinb)
 {
-	t_pos pos;
+	int		placed;
+	t_pos	pos;
 
+	placed = 0;
 	pos = ft_pos(tetri->board);
-	if (tetri->prev == NULL)
+	while (placed != tetrinb)
 	{
-		ft_putstr("\nincreasing\n");
-		tetri->x = 0;
-		tetri->y = 0;
-		map = ft_map(map, size++);
+		if (ft_fit(tetri, ft_pos(tetri->board), size, map) == 1)
+		{
+			if (tetri->next == NULL)
+				return (map);
+			tetri = tetri->next;
+			placed++;
+		}
+		else
+		{
+			if (tetri->prev == NULL)
+			{
+				ft_putstr("\nincreasing\n");
+				tetri->x = 0;
+				tetri->y = 0;
+				map = ft_map(map, size++);
+			}
+			if (tetri->prev != NULL)
+			{
+				tetri->x = 0;
+				tetri->y = 0;
+				tetri = tetri->prev;
+				map = ft_erase(map, tetri->letter);
+				placed--;
+				ft_tetripos(tetri, size);
+			}
+		}
 	}
-	if (tetri->prev != NULL)
-	{
-		tetri->x = 0;
-		tetri->y = 0;
-		tetri = tetri->prev;
-		map = ft_erase(map, tetri->letter);
-		ft_tetripos(tetri, size);
-	}
-	ft_fit(tetri, ft_pos(tetri->board), size, map);
-	return (size);
+	return (map);
 }
 
 /*
