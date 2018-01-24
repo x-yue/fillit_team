@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 00:39:57 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 06:16:40 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/25 00:10:33 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_showtab(char **board)
 
 	i = 0;
 	if (board == NULL)
-		return;
+		return ;
 	while (board[i] != NULL)
 	{
 		j = 0;

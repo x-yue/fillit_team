@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/24 23:27:39 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/24 23:50:45 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		ft_unfit(t_tetri *tetri, char **map, int size)
 ** calls to ft_set if it is the first time we call this ft
 */
 
-char		**ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap)
+int			ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap)
 {
 	static	char	**map;
 
@@ -118,9 +118,8 @@ char		**ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap)
 			{
 				if ((ft_checkpos(tetri, map, size)) == 4)
 				{
-					if (tetri->next != NULL)
-						ft_fit(tetri->next, ft_pos(tetri->next->board), size, map);
-					return (map);
+					tetri->y++;
+					return (1);
 				}
 			}
 			tetri->y++;
@@ -128,6 +127,5 @@ char		**ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap)
 		tetri->x++;
 		tetri->y = 0;
 	}
-	size = ft_unfit(tetri, map, size);
-	return (map);
+	return (2);
 }

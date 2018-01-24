@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 06:16:53 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/24 23:38:58 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char				**ft_set(int size);
 char				**ft_insert(char **map, t_tetri *tetri, int line, int col);
 char				**ft_erase(char **map, char letter);
 int					ft_unfit(t_tetri *tetri, char **map, int size);
-char				**ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap);
+int					ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap);
 int					ft_check(char *str);
 int					ft_minsize(int tetrinb);
 int					ft_read(char *filename);
