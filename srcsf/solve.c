@@ -60,49 +60,44 @@ void		ft_tetripos(t_tetri *tetri, int size)
 	}
 }
 
-int			ft_checkpos(t_tetri *tetri, t_fit fit, char **map, int size)
+int			ft_checkpos(t_tetri *tetri, char **map, int size)
 {
 	int		count;
 	t_pos	pos;
 
 	count = 0;
 	pos = ft_pos(tetri->board);
-//	printf("%d: {%d : %d}\n", size, fit.line + tetri->x + pos.x[count], fit.col + tetri->y + pos.y[count]);
-	while (count < 4 && (fit.line + tetri->x + pos.x[count]) < size &&
-	(fit.col + tetri->y + pos.y[count]) < size &&
-	map[fit.line + tetri->x + pos.x[count]]
-	[fit.col + tetri->y + pos.y[count]] == '.')//segfault here
-	{
-//		ft_putstr("xd2.0\n");
+	while (count < 4 && (tetri->x + pos.x[count]) < size &&
+	(tetri->y + pos.y[count]) < size &&
+	map[tetri->x + pos.x[count]][tetri->y + pos.y[count]] == '.')
 		count++;
-	}
 	if (count == 4)
-		map = ft_insert(map, tetri, fit.line + tetri->x, fit.col + tetri->y);
+		map = ft_insert(map, tetri, tetri->x, tetri->y);
 	return (count);
 }
 
-int		ft_unfit(t_tetri *tetri, char **map, int size, t_fit fit)
+int		ft_unfit(t_tetri *tetri, char **map, int size)
 {
-	t_pos	pos;
+	t_pos pos;
+
 	pos = ft_pos(tetri->board);
-	if (tetri->prev == NULL && (tetri->x + fit.line + pos.x[0]) >= size - 1 && (tetri->y + fit.col + pos.y[0]) >= size - 1)
+	if (tetri->prev == NULL)
 	{
 		ft_putstr("\nincreasing\n");
 		tetri->x = 0;
-		tetri->y = -1;
-		map = ft_map(map, size++);///
-	}//elseif
-	if (tetri->prev != NULL && (tetri->x + fit.line + pos.x[0]) >= size - 1 && (tetri->y + fit.col + pos.y[0]) >= size - 1)
+		tetri->y = 0;
+		ft_map(map, size++);
+	}
+	if (tetri->prev != NULL)
 	{
 		tetri->x = 0;
 		tetri->y = 0;
 		tetri = tetri->prev;
-		map = ft_erase(map, tetri->letter);//rmv map = if return size
+		ft_erase(map, tetri->letter);
+		ft_tetripos(tetri, size);
 	}
-//	ft_putstr("xd4.0\n");
-	ft_tetripos(tetri, size);
 	ft_fit(tetri, ft_pos(tetri->board), size, map);
-	return (size);//return map?
+	return (size);
 }
 
 /*
@@ -112,39 +107,27 @@ int		ft_unfit(t_tetri *tetri, char **map, int size, t_fit fit)
 
 char		**ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap)
 {
-	t_fit			fit;
 	static	char	**map;
 
-	//if (map == NULL)
 	map = nmap;
-	fit.line = 0;
-	//ft_showtab(map);
-//	ft_putchar('\n');
-//	printf("%c: [%d : %d]\n",tetri->letter, tetri->x, tetri->y);
-	while (map[fit.line] != NULL)
+	while (tetri->x + pos.x[0] < size)
 	{
-		fit.col = 0;
-		while (map[fit.line][fit.col] != '\n')
+		while (tetri->y + pos.y[0] < size)
 		{
-	//	printf("(%d : %d | %c)\n", fit.line, fit.col, map[fit.line][fit.col]);
-			if (map[fit.line + pos.x[0]][fit.col + pos.y[0]] == '.')
+			if (map[tetri->x + pos.x[0]][tetri->y + pos.y[0]] == '.')
 			{
-				//ft_putstr("xd\n");
-//					ft_showtab(map);
-//					ft_putchar('\n');
-				if ((ft_checkpos(tetri, fit, map, size)) == 4)
+				if ((ft_checkpos(tetri, map, size)) == 4)
 				{
 					if (tetri->next != NULL)
 						ft_fit(tetri->next, ft_pos(tetri->next->board), size, map);
 					return (map);
 				}
-			//ft_putstr("xd3.0\n");
 			}
-			fit.col++;
+			tetri->y++;
 		}
-		fit.line++;
+		tetri->x++;
+		tetri->y = 0;
 	}
-	//	printf("(%d : %d)\n", fit.line, fit.col);
-	size = ft_unfit(tetri, map, size, fit);
+	size = ft_unfit(tetri, map, size);
 	return (map);
 }

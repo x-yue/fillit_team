@@ -98,7 +98,7 @@ int			ft_lsttetri(t_double *lst, char **board, int tetrinb)
 	tetri->letter = 'A' + tetrinb;
 	tetri->board = board;
 	tetri->x = 0;
-	tetri->y = -1;/////
+	tetri->y = 0;
 	tetri->next = NULL;
 	if (lst->tail == NULL)
 	{
@@ -138,6 +138,30 @@ int			ft_minsize(int tetrinb)
 }
 
 /*
+void		ft_solve(t_tetri *tetri, char **map, int size, int tetrinb)
+{
+	int		placed;
+
+	placed = 0;
+	while (placed != tetrinb)
+	{
+		if (ft_fit(tetri, ft_pos(tetri->board), size, map) == 1)//si il fit
+		{
+		ft_showtab(map);
+			if (tetri->next == NULL)
+				return;
+			tetri = tetri->next;
+			placed++;
+		}
+		else
+		{
+			size = ft_unfit(tetri, map, size);
+			placed--;
+		}
+	}
+}*/
+
+/*
 ** this function reads the file containing the tetriminos,
 ** sets the double chained list, calls to ft_check,
 ** then to ft_lsttetri and ft_board
@@ -169,6 +193,7 @@ int			ft_read(char *filename)
 	free(lst);
 	if (close(f.fd) == -1 || f.end != 1)
 		return (0);
-	ft_showtab(ft_fit(tetri, ft_pos(tetri->board), ft_minsize(f.tetrinb), ft_set(ft_minsize(f.tetrinb)))); //ft_minsize(f.tetrinb)));
+	//ft_solve(tetri, ft_set(ft_minsize(f.tetrinb)), ft_minsize(f.tetrinb), f.tetrinb);
+	ft_showtab(ft_fit(tetri, ft_pos(tetri->board), ft_minsize(f.tetrinb), ft_set(ft_minsize(f.tetrinb))));
 	return (1);
 }

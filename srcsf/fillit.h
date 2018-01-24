@@ -89,13 +89,13 @@ char				**ft_map(char **map, int size);
 char				**ft_set(int size);
 char				**ft_insert(char **map, t_tetri *tetri, int line, int col);
 char				**ft_erase(char **map, char letter);
-int					ft_unfit(t_tetri *tetri, char **map, int size, t_fit fit);
+int					ft_unfit(t_tetri *tetri, char **map, int size);
 char				**ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap);
 int					ft_check(char *str);
 int					ft_minsize(int tetrinb);
 int					ft_read(char *filename);
 int					first_left(char **board);
-int					ft_checkpos(t_tetri *tetri, t_fit fit, char **map,
+int					ft_checkpos(t_tetri *tetri, char **map,
 																	int size);
 
 #endif
