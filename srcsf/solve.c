@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 06:17:18 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/24 23:27:39 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ int		ft_unfit(t_tetri *tetri, char **map, int size)
 		ft_putstr("\nincreasing\n");
 		tetri->x = 0;
 		tetri->y = 0;
-		ft_map(map, size++);
+		map = ft_map(map, size++);
 	}
 	if (tetri->prev != NULL)
 	{
 		tetri->x = 0;
 		tetri->y = 0;
 		tetri = tetri->prev;
-		ft_erase(map, tetri->letter);
+		map = ft_erase(map, tetri->letter);
 		ft_tetripos(tetri, size);
 	}
 	ft_fit(tetri, ft_pos(tetri->board), size, map);
