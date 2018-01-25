@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/25 00:29:24 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/25 01:39:11 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			ft_check(char *str)
 		}
 		arr[0]++;
 	}
-	if (arr[1] != 4 || (arr[2] != 6 && arr[2] != 8))
+	if (arr[1] != 4 || (arr[2] != 6 && arr[2] != 8) || str[20] != '\n')
 		return (0);
 	return (1);
 }
@@ -89,13 +89,13 @@ int			ft_check(char *str)
 ** -the previous node address
 */
 
-int			ft_lsttetri(t_double *lst, char **board, int tetrinb)
+int			ft_lsttetri(t_double *lst, char **board, int tnb)
 {
-	t_tetri	*tetri;
+	t_tetri		*tetri;
 
 	if ((tetri = (t_tetri*)malloc(sizeof(t_tetri))) == NULL || board == NULL)
 		return (0);
-	tetri->letter = 'A' + tetrinb;
+	tetri->letter = 'A' + tnb;
 	tetri->board = board;
 	tetri->x = 0;
 	tetri->y = 0;
@@ -119,13 +119,13 @@ int			ft_lsttetri(t_double *lst, char **board, int tetrinb)
 ** this ft returns the minimum size of the map taking the nb of tetriminos
 */
 
-int			ft_minsize(int tetrinb)
+int			ft_min(int tnb)
 {
-	int	hashnb;
-	int size;
+	int		hashnb;
+	int		size;
 
 	size = 2;
-	hashnb = tetrinb * 4;
+	hashnb = tnb * 4;
 	if (hashnb <= 0)
 		return (0);
 	while (size * size <= hashnb)
@@ -155,13 +155,13 @@ int			ft_read(char *filename)
 		return (0);
 	lst->tail = NULL;
 	lst->head = NULL;
-	f.tetrinb = 0;
+	f.tnb = 0;
 	f.end = 0;
 	while ((f.rd = read(f.fd, f.buf, 21)) >= 20)
 	{
 		if (ft_check(f.buf) == 0)
 			return (0);
-		ft_lsttetri(lst, ft_board(f.buf), f.tetrinb++);
+		ft_lsttetri(lst, ft_board(f.buf), f.tnb++);
 		tetri = lst->head;
 		if (f.rd == 20)
 			f.end = 1;
@@ -169,7 +169,6 @@ int			ft_read(char *filename)
 	free(lst);
 	if (close(f.fd) == -1 || f.end != 1)
 		return (0);
-	ft_showtab(ft_solve(tetri, ft_set(ft_minsize(f.tetrinb)),
-											ft_minsize(f.tetrinb), f.tetrinb));
+	ft_showtab(ft_solve(tetri, ft_set(ft_min(f.tnb)), ft_min(f.tnb), f.tnb));
 	return (1);
 }
