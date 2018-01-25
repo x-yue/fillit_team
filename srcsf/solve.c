@@ -44,7 +44,7 @@ t_pos		ft_pos(char **board)
 	return (pos);
 }
 
-void		ft_tetripos(t_tetri *tetri, int size)
+void		ft_tetripos(t_tetri *tetri, int size)//
 {
 	t_tetri *tmp;
 
@@ -95,7 +95,7 @@ char		**ft_solve(t_tetri *tetri, char **map, int size, int tnb)
 			{
 				tetri = tetri->prev;
 				map = ft_erase(map, tetri->letter);
-				ft_tetripos(tetri, size);
+				//ft_tetripos(tetri, size);
 				tnb++;
 			}
 		}
@@ -121,7 +121,7 @@ int			ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap)
 			{
 				if ((ft_checkpos(tetri, map, size)) == 4)
 				{
-					tetri->y++;
+					tetri->y++;//
 					return (1);
 				}
 			}
