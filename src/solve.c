@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/26 23:48:53 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/27 01:05:28 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ t_pos		ft_pos(char **board)
 	return (pos);
 }
 
+/*
+** this function check the position for the tetri, if the 4 spots are available
+** we insert the tetri using ft_insert
+*/
+
 int			ft_checkpos(t_tetri *tetri, char **map, int size)
 {
 	int		count;
@@ -59,6 +64,11 @@ int			ft_checkpos(t_tetri *tetri, char **map, int size)
 		map = ft_insert(map, tetri, tetri->x, tetri->y);
 	return (count);
 }
+
+/*
+** this ft calls to fit, if fits return 1, the tetriminos has been inserted
+** else, we get to the previous tetri, try to place it...
+*/
 
 char		**ft_solve(t_tetri *tetri, char **map, int size, int tnb)
 {
@@ -87,7 +97,8 @@ char		**ft_solve(t_tetri *tetri, char **map, int size, int tnb)
 }
 
 /*
-** this function check if a tetriminos can fit
+** this function check for the first dot on the mao
+** starting from the position at tetri->x / tetri->y pos
 ** calls to ft_checkpos to check if the tetriminos can fit / insert it
 */
 

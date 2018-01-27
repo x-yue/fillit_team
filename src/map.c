@@ -6,15 +6,15 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 00:39:57 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/25 00:10:33 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/27 01:08:53 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 /*
-** sets the first map as small as a tetriminos can be (2*2)
-** called once in ft_fit if it's the first time we call the ft
+** sets the first map as small as possible
+** we use ft_min + the nb of tetri to determine the smallest size
 */
 
 char	**ft_set(int size)
@@ -78,8 +78,8 @@ char	**ft_map(char **map, int size)
 }
 
 /*
-** insert the tetriminos (board) `in the map
-** called in ft_fit
+** insert the tetriminos (board) in the map
+** called in ft_checkpos
 */
 
 char	**ft_insert(char **map, t_tetri *tetri, int line, int col)

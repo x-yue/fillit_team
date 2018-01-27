@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/25 01:39:11 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/27 01:08:37 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int			ft_check(char *str)
 ** this function creates a new node which holds
 ** -the letter of the tetriminos
 ** -the tetriminos
-** -the first spot where we'll try to placed the tetriminos
+** -the first spot where we'll try to place the tetriminos
 ** -the previous node address
 */
 
@@ -141,7 +141,7 @@ int			ft_min(int tnb)
 ** this function reads the file containing the tetriminos,
 ** sets the double chained list, calls to ft_check,
 ** then to ft_lsttetri and ft_board
-** ultimately, it calls to ft_fit
+** ultimately, it calls to ft_solve
 */
 
 int			ft_read(char *filename)
