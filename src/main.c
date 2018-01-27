@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 20:27:48 by yuxu              #+#    #+#             */
-/*   Updated: 2018/01/20 05:46:25 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/27 02:54:35 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		main(int ac, char **av)
 {
 	if (ac != 2)
 	{
-		ft_putstr("usage: fillit source_file");
+		ft_putstr("usage: fillit source_file\n");
 		return (0);
 	}
 	if (ft_read(av[1]) == 0)
