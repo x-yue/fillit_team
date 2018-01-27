@@ -6,11 +6,12 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 03:02:55 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 06:17:18 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/26 23:48:53 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 /*
 ** this function return the position of every hashtag of a tetriminos
@@ -43,91 +44,74 @@ t_pos		ft_pos(char **board)
 	return (pos);
 }
 
-void		ft_tetripos(t_tetri *tetri, int size)
-{
-	t_tetri *tmp;
-
-	tmp = tetri;
-	if (tetri->x < size)
-	{
-		if (tetri->y == size - 1)
-		{
-			tetri->y = -1;
-			tetri->x++;
-		}
-		tetri->y++;
-	}
-}
-
-int		ft_unfit(t_tetri *tetri, char **map, int size)
-{
-	if (tetri->prev == NULL && tetri->x == size - 1 && tetri->y == size - 1)
-	{
-		ft_putstr("\nincreasing\n");
-		tetri->x = 0;
-		tetri->y = 0;
-		map = ft_map(map, size++);///
-	}
-	if (tetri->prev != NULL && tetri->x == size - 1 && tetri->y == size - 1)
-	{
-		tetri->x = 0;
-		tetri->y = 0;
-		tetri = tetri->prev;
-		map = ft_erase(map, tetri->letter);//rmv map = if return size
-	}
-	ft_tetripos(tetri, size);
-	ft_fit(tetri, ft_pos(tetri->board), size);
-	return (size);//return map?
-}
-
-int			ft_checkpos(t_tetri *tetri, t_fit fit, char **map, int size)
+int			ft_checkpos(t_tetri *tetri, char **map, int size)
 {
 	int		count;
 	t_pos	pos;
 
 	count = 0;
 	pos = ft_pos(tetri->board);
-	while ((fit.line + tetri->x + pos.x[count]) < size &&
-	(fit.col + tetri->y + pos.y[count]) < size && count < 4 &&
-	map[fit.line + tetri->x + pos.x[count]]
-	[fit.col + tetri->y + pos.y[count]] == '.')
+	while (count < 4 && (tetri->x + pos.x[count]) < size &&
+	(tetri->y + pos.y[count]) < size &&
+	map[tetri->x + pos.x[count]][tetri->y + pos.y[count]] == '.')
 		count++;
 	if (count == 4)
-		map = ft_insert(map, tetri, fit.line + tetri->x, fit.col + tetri->y);
+		map = ft_insert(map, tetri, tetri->x, tetri->y);
 	return (count);
+}
+
+char		**ft_solve(t_tetri *tetri, char **map, int size, int tnb)
+{
+	t_pos	pos;
+
+	pos = ft_pos(tetri->board);
+	while (tnb != 0)
+	{
+		if (ft_fit(tetri, ft_pos(tetri->board), size, map) == 1 && tnb-- != 0)
+			tetri = tetri->next;
+		else
+		{
+			tetri->x = 0;
+			tetri->y = 0;
+			if (tetri->prev == NULL)
+				map = ft_map(map, size++);
+			if (tetri->prev != NULL)
+			{
+				tetri = tetri->prev;
+				map = ft_erase(map, tetri->letter);
+				tnb++;
+			}
+		}
+	}
+	return (map);
 }
 
 /*
 ** this function check if a tetriminos can fit
-** calls to ft_set if it is the first time we call this ft
+** calls to ft_checkpos to check if the tetriminos can fit / insert it
 */
 
-char		**ft_fit(t_tetri *tetri, t_pos pos, int size)
+int			ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap)
 {
-	t_fit			fit;
 	static	char	**map;
 
-	if (map == NULL)
-		map = ft_set(size);
-	fit.line = 0;
-	while (map[fit.line] != NULL)
+	map = nmap;
+	while (tetri->x + pos.x[0] < size)
 	{
-		fit.col = 0;
-		while (map[fit.line][fit.col] != '\0')
+		while (tetri->y + pos.y[0] < size)
 		{
-			if (map[fit.line + pos.x[0]][fit.col + pos.y[0]] == '.')
-				if ((ft_checkpos(tetri, fit, map, size)) == 4)
+			if (map[tetri->x + pos.x[0]][tetri->y + pos.y[0]] == '.')
+			{
+				if ((ft_checkpos(tetri, map, size)) == 4)
 				{
-					//ft_showtab(map);
-					//ft_putchar('\n');
-					if (tetri->next != NULL)
-						ft_fit(tetri->next, ft_pos(tetri->next->board), size);
-					return (map);
+					tetri->y++;
+					return (1);
 				}
-			fit.col++;
+			}
+			tetri->y++;
 		}
-		fit.line++;
+		tetri->x++;
+		tetri->y = 0;
 	}
-	size = ft_unfit(tetri, map, size);
-	return (map);
+	return (2);
 }

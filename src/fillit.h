@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/20 06:16:53 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/25 01:04:30 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef	struct		s_file
 {
 	int				fd;
 	int				rd;
-	int				tetrinb;
+	int				tnb;
 	int				end;
 	char			buf[21];
 }					t_file;
@@ -76,10 +76,11 @@ typedef	struct		s_move
 	char			**tmp;
 }					t_move;
 
-int					ft_lsttetri(t_double *lst, char **board, int tetrinb);
+int					ft_lsttetri(t_double *lst, char **board, int tnb);
 t_pos				ft_pos(char **board);
 void				ft_tetripos(t_tetri *tetri, int size);
 void				ft_showtab(char **board);
+char				**ft_solve(t_tetri *tetri, char **map, int size, int tnb);
 char				**ft_board(char *str);
 char				**malloc_it(void);
 char				**ft_swap_up(char **board, int line, int i, int mv_up);
@@ -90,12 +91,11 @@ char				**ft_set(int size);
 char				**ft_insert(char **map, t_tetri *tetri, int line, int col);
 char				**ft_erase(char **map, char letter);
 int					ft_unfit(t_tetri *tetri, char **map, int size);
-char				**ft_fit(t_tetri *tetri, t_pos pos, int size);
+int					ft_fit(t_tetri *tetri, t_pos pos, int size, char **nmap);
 int					ft_check(char *str);
-int					ft_minsize(int tetrinb);
+int					ft_min(int tetrinb);
 int					ft_read(char *filename);
 int					first_left(char **board);
-int					ft_checkpos(t_tetri *tetri, t_fit fit, char **map,
-																	int size);
+int					ft_checkpos(t_tetri *tetri, char **map, int size);
 
 #endif

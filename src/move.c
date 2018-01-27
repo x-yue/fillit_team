@@ -6,7 +6,7 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:34:42 by yuxu              #+#    #+#             */
-/*   Updated: 2018/01/20 06:09:40 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/27 00:26:56 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	**ft_swap_up(char **board, int line, int i, int mv_up)
 		board[line][i] = board[line - mv_up][i];
 		board[line - mv_up][i] = tmp[line][i];
 	}
+	free(tmp);
+	tmp = NULL;
 	return (board);
 }
 
@@ -78,7 +80,6 @@ char	**ft_left(char **board)
 	t_move	uni;
 	char	tmp;
 
-	//uni.tmp = malloc_it();
 	uni.l = 0;
 	uni.mv_l = first_left(board);
 	while (uni.l < 4)
@@ -99,7 +100,6 @@ char	**ft_left(char **board)
 		}
 		uni.l++;
 	}
-	//free(uni.tmp);
 	return (board);
 }
 
