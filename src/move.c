@@ -6,11 +6,16 @@
 /*   By: yuxu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/17 01:34:42 by yuxu              #+#    #+#             */
-/*   Updated: 2018/01/27 00:26:56 by ablin            ###   ########.fr       */
+/*   Updated: 2018/01/27 01:16:36 by yuxu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+** malloc_it will create a temporary board, it will be used in ft_swap_up
+** to put all the # to the top place
+*/
 
 char	**malloc_it(void)
 {
@@ -30,6 +35,10 @@ char	**malloc_it(void)
 	return (tmp);
 }
 
+/*
+** to put all the # to the top place : mv_up == distance to the top
+*/
+
 char	**ft_swap_up(char **board, int line, int i, int mv_up)
 {
 	char	**tmp;
@@ -41,10 +50,13 @@ char	**ft_swap_up(char **board, int line, int i, int mv_up)
 		board[line][i] = board[line - mv_up][i];
 		board[line - mv_up][i] = tmp[line][i];
 	}
-	free(tmp);
-	tmp = NULL;
 	return (board);
 }
+
+/*
+**first_left is used to calculate the shortest distance to the left of all #
+** it will return a mv_l for ft_left to move lefter :)
+*/
 
 int		first_left(char **board)
 {
@@ -75,6 +87,11 @@ int		first_left(char **board)
 	return (uni.mv_l);
 }
 
+/*
+**ft_left will move the tetri to the left by deleting the distance of mv_l
+**callslculated from first_left
+*/
+
 char	**ft_left(char **board)
 {
 	t_move	uni;
@@ -104,8 +121,8 @@ char	**ft_left(char **board)
 }
 
 /*
-** Freed tmp here, it might be helpful
-** to consult with Andrea later
+** ft_united is the fonction calls all the other fonction to move tetris
+** to the upper-left corner
 */
 
 char	**ft_united(char **board)
