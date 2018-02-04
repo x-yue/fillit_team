@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 21:05:09 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/27 01:08:37 by ablin            ###   ########.fr       */
+/*   Updated: 2018/02/04 12:58:05 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			ft_check(char *str)
 		}
 		arr[0]++;
 	}
-	if (arr[1] != 4 || (arr[2] != 6 && arr[2] != 8) || str[20] != '\n')
+	if (arr[1] != 4 || (arr[2] != 6 && arr[2] != 8) || LASTCHRCHECK)
 		return (0);
 	return (1);
 }
@@ -124,7 +124,7 @@ int			ft_min(int tnb)
 	int		hashnb;
 	int		size;
 
-	size = 2;
+	size = 1;
 	hashnb = tnb * 4;
 	if (hashnb <= 0)
 		return (0);

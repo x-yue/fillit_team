@@ -6,7 +6,7 @@
 /*   By: ablin <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 08:27:18 by ablin             #+#    #+#             */
-/*   Updated: 2018/01/27 01:05:45 by ablin            ###   ########.fr       */
+/*   Updated: 2018/02/04 12:54:53 by ablin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include "../lib/libft.h"
+# define LASTCHRCHECK (str[20] != '\n' && str[20] != '\0')
 
 typedef	struct		s_tetri
 {
